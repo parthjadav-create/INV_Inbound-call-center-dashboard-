@@ -52,7 +52,6 @@
     justify-content: space-between;
     height: 60px;
     box-shadow: 0 2px 8px rgba(0,0,0,0.15);
-    position: sticky; top: 0; z-index: 100;
   }
   .header-brand { display: flex; align-items: center; gap: 12px; }
   .header-icon {
@@ -103,7 +102,7 @@
   }
 
   /* ── KPI Cards ── */
-  .kpi-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 12px; }
+  .kpi-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(160px, 1fr)); gap: 12px; }
   .kpi-card {
     background: var(--surface); border-radius: var(--radius-md);
     border: 1px solid var(--border); padding: 16px 18px;
@@ -111,15 +110,8 @@
   }
   .kpi-card::before {
     content: ''; position: absolute; top: 0; left: 0; right: 0; height: 3px;
+    background: var(--teal);
   }
-  .kpi-card.c-teal::before    { background: var(--teal); }
-  .kpi-card.c-green::before   { background: var(--green); }
-  .kpi-card.c-amber::before   { background: var(--amber); }
-  .kpi-card.c-red::before     { background: var(--red); }
-  .kpi-card.c-purple::before  { background: var(--purple); }
-  .kpi-card.c-pink::before    { background: var(--pink); }
-  .kpi-card.c-blue::before    { background: var(--blue); }
-  .kpi-card.c-olive::before   { background: var(--olive); }
   .kpi-label { font-size: 11px; font-weight: 500; color: var(--text-muted); text-transform: uppercase; letter-spacing: 0.05em; margin-bottom: 8px; }
   .kpi-value { font-size: 26px; font-weight: 700; color: var(--text-primary); line-height: 1; }
   .kpi-meta { font-size: 11px; color: var(--text-muted); margin-top: 6px; }
@@ -141,14 +133,12 @@
   }
 
   /* ── Grid layouts ── */
-  .two-col   { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+  .two-col { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
   .three-col { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 16px; }
-  .four-col  { display: grid; grid-template-columns: 1fr 1fr 1fr 1fr; gap: 16px; }
-  @media (max-width: 1100px) { .four-col { grid-template-columns: 1fr 1fr; } }
-  @media (max-width: 900px) { .two-col, .three-col, .four-col { grid-template-columns: 1fr; } }
+  @media (max-width: 900px) { .two-col, .three-col { grid-template-columns: 1fr; } }
 
   /* ── Charts ── */
-  .chart-wrap    { position: relative; width: 100%; height: 260px; }
+  .chart-wrap { position: relative; width: 100%; height: 260px; }
   .chart-wrap-sm { position: relative; width: 100%; height: 200px; }
   .chart-wrap-lg { position: relative; width: 100%; height: 320px; }
 
@@ -172,7 +162,6 @@
   thead th:first-child { text-align: left; }
   tbody td { padding: 7px 10px; text-align: right; border-bottom: 1px solid var(--border); color: var(--text-primary); }
   tbody td:first-child { text-align: left; font-weight: 500; }
-  tbody tr:last-child td { border-bottom: none; }
   tbody tr:hover td { background: var(--surface2); }
   tfoot td {
     padding: 8px 10px; text-align: right; font-weight: 700; font-size: 12px;
@@ -180,47 +169,15 @@
   }
   tfoot td:first-child { text-align: left; }
 
-  /* ── Badges ── */
+  /* ── Talk time variance badges ── */
   .var-badge {
     display: inline-block; padding: 2px 8px; border-radius: 20px;
     font-size: 11px; font-weight: 600; white-space: nowrap;
   }
-  .var-green  { background: #c6f6d5; color: #276749; }
-  .var-amber  { background: #fefcbf; color: #7b6000; }
+  .var-green { background: #c6f6d5; color: #276749; }
+  .var-amber { background: #fefcbf; color: #7b6000; }
   .var-orange { background: #feebc8; color: #7b3f00; }
-  .var-red    { background: #fed7d7; color: #9b2c2c; }
-
-  .pill {
-    display: inline-block; padding: 2px 8px; border-radius: 20px;
-    font-size: 10px; font-weight: 600; white-space: nowrap;
-  }
-  .pill-green  { background: #c6f6d5; color: #276749; }
-  .pill-red    { background: #fed7d7; color: #9b2c2c; }
-  .pill-gray   { background: #e2e8f0; color: #4a5568; }
-  .pill-amber  { background: #fefcbf; color: #7b6000; }
-  .pill-teal   { background: var(--teal-light); color: var(--teal-dark); }
-
-  /* ── Filter bar ── */
-  .filter-bar {
-    display: flex; flex-wrap: wrap; gap: 10px; align-items: center;
-    background: var(--surface); border: 1px solid var(--border);
-    border-radius: var(--radius-md); padding: 12px 16px;
-    margin-bottom: 16px; box-shadow: var(--shadow-sm);
-  }
-  .filter-bar label { font-size: 12px; color: var(--text-secondary); font-weight: 500; }
-  .filter-bar select, .filter-bar input {
-    border: 1px solid var(--border2); border-radius: 6px;
-    padding: 5px 10px; font-size: 12px; color: var(--text-primary);
-    background: var(--surface2); cursor: pointer; outline: none;
-  }
-  .filter-bar select:focus, .filter-bar input:focus { border-color: var(--teal); }
-  .filter-group { display: flex; align-items: center; gap: 6px; }
-  .filter-reset {
-    background: var(--teal-light); color: var(--teal-dark); border: 1px solid rgba(6,148,162,0.2);
-    border-radius: 6px; padding: 5px 12px; font-size: 12px; font-weight: 600;
-    cursor: pointer; transition: background 0.15s;
-  }
-  .filter-reset:hover { background: #bce9ed; }
+  .var-red { background: #fed7d7; color: #9b2c2c; }
 
   /* ── Footer ── */
   .footer {
@@ -232,13 +189,6 @@
   ::-webkit-scrollbar { width: 6px; height: 6px; }
   ::-webkit-scrollbar-track { background: transparent; }
   ::-webkit-scrollbar-thumb { background: var(--border2); border-radius: 3px; }
-
-  /* ── Bar chart horizontal ── */
-  .hbar-row { display: flex; align-items: center; gap: 8px; margin-bottom: 6px; font-size: 11px; }
-  .hbar-label { width: 120px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; color: var(--text-secondary); flex-shrink: 0; }
-  .hbar-track { flex: 1; background: var(--surface2); border-radius: 3px; height: 10px; overflow: hidden; }
-  .hbar-fill  { height: 100%; border-radius: 3px; transition: width 0.5s ease; }
-  .hbar-val   { width: 36px; text-align: right; font-weight: 600; color: var(--text-primary); flex-shrink: 0; }
 </style>
 </head>
 <body>
@@ -257,10 +207,7 @@
   <div class="header-right">
     <div class="status-dot" title="Live data"></div>
     <button class="refresh-btn" onclick="loadData()">
-      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
-        <path d="M23 4v6h-6M1 20v-6h6"/>
-        <path d="M3.51 9a9 9 0 0114.85-3.36L23 10M1 14l4.64 4.36A9 9 0 0020.49 15"/>
-      </svg>
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M23 4v6h-6M1 20v-6h6"/><path d="M3.51 9a9 9 0 0114.85-3.36L23 10M1 14l4.64 4.36A9 9 0 0020.49 15"/></svg>
       Refresh
     </button>
     <div id="last-updated" style="font-size:11px;color:rgba(255,255,255,0.65);"></div>
@@ -285,46 +232,34 @@
 
 <!-- ══ SCRIPTS ══════════════════════════════════════════════════ -->
 <script>
-/* ─── CONFIG ─────────────────────────────────────────────────── */
-// ✅ Updated to your new Web App URL
-const SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbxqwR55GP6tVdbnt-UJ3oc8gSTwgsXcdxvPy-jcHfS4PnV2lGfawwRH8D4WLbRuTrY6/exec';
+/* ─── CONFIG ────────────────────────────────────────────────── */
+const SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbyBZVvGUCw2bS-kgyjY9JlFsMIj21vejB8Yhm62oKFZPY64E0gWYdPHZdcFnJvVoYCE/exec';
 
 /* ─── COLORS ─────────────────────────────────────────────────── */
 const STATUS_COLORS = {
-  'Done':            '#1d9e75',
-  'Close':           '#ba7517',
-  'Not Related':     '#d4537e',
-  'Other Language':  '#7f77dd',
-  'Physical Visit':  '#378add',
-  'Tech Concern':    '#85b7eb',
-  'Missed':          '#e24b4a',
-  '(none)':          '#888780'
+  'Done':           '#1d9e75',
+  'Close':          '#ba7517',
+  'Not Related':    '#d4537e',
+  'Other Language': '#7f77dd',
+  'Physical Visit': '#63c090',
+  'Tech Concern':   '#85b7eb'
 };
 const CAT_COLORS = {
-  'Issues':          '#7f77dd',
-  'Close':           '#ba7517',
-  'Training':        '#1d9e75',
-  'Physical Visit':  '#639922',
-  'Google Meet':     '#17a0ba',
-  'WhatsApp Call':   '#d4537e',
-  'Whatsapp Call':   '#d4537e',
-  '(none)':          '#888780'
+  'Issues':        '#7f77dd',
+  'Close':         '#ba7517',
+  'Training':      '#1d9e75',
+  'Physical Visit':'#639922',
+  'Google Meet':   '#17a0ba',
+  'WhatsApp Call': '#d4537e',
+  'Whatsapp Call': '#d4537e',
+  'null':          '#888780'
 };
-const INTERACTION_COLORS = {
-  'Inbound':         '#0694a2',
-  'Outbound':        '#ba7517',
-  'Missed':          '#e24b4a',
-  '(none)':          '#888780'
-};
-
-// ✅ All Status1 values from your sheet
 const STATUS_KEYS = ['Done','Close','Not Related','Other Language','Physical Visit','Tech Concern'];
-// ✅ All Category values from your sheet
 const CAT_KEYS    = ['Issues','Close','Training','Physical Visit','Google Meet','WhatsApp Call'];
 
 /* ─── UTILS ─────────────────────────────────────────────────── */
-const fmt = n => (n||0).toLocaleString('en-IN');
-const pct = (n,t) => t ? (n/t*100).toFixed(1)+'%' : '0%';
+const fmt   = n => (n||0).toLocaleString('en-IN');
+const pct   = (n,t) => t ? (n/t*100).toFixed(1)+'%' : '0%';
 
 function secsToHMS(s) {
   s = Math.round(Math.abs(s||0));
@@ -332,108 +267,59 @@ function secsToHMS(s) {
   return [h,m,ss].map(x=>String(x).padStart(2,'0')).join(':');
 }
 
-function secToMM(s) {
-  s = Math.round(Math.abs(s||0));
-  const m = Math.floor(s/60), ss = s%60;
-  return m + 'm ' + String(ss).padStart(2,'0') + 's';
-}
-
 function varBadge(variance) {
   const abs = Math.abs(variance);
   let cls;
-  if (abs < 60)        cls = 'var-green';
-  else if (abs < 300)  cls = 'var-amber';
-  else if (abs < 600)  cls = 'var-orange';
-  else                 cls = 'var-red';
+  if (abs < 1800)       cls = 'var-green';
+  else if (abs < 3600)  cls = 'var-amber';
+  else if (abs < 5400)  cls = 'var-orange';
+  else                  cls = 'var-red';
   const sign = variance >= 0 ? '+' : '-';
   return `<span class="var-badge ${cls}">${sign}${secsToHMS(abs)}</span>`;
 }
 
-// ✅ Fixed: parse "Date (mm/dd/yyyy)" column to extract hour from "Time" column
-function parseHour(row) {
-  // First try the dedicated Time column
-  const timeVal = row['Time'] || '';
-  if (timeVal) {
-    const m = String(timeVal).match(/(\d{1,2}):(\d{2})/);
-    if (m) return parseInt(m[1]);
-  }
-  // Fallback: try Date column
-  const dateVal = row['Date'] || row['Date (mm/dd/yyyy)'] || '';
-  if (dateVal) {
-    const d = new Date(dateVal);
-    if (!isNaN(d)) return d.getHours();
-  }
-  return -1;
-}
-
-// ✅ Fixed: parse "Date (mm/dd/yyyy)" correctly for working-day counting
-function parseDate(row) {
-  const raw = row['Date (mm/dd/yyyy)'] || row['Date'] || '';
-  if (!raw) return null;
-  // Apps Script returns yyyy-MM-dd for date cells
-  const d = new Date(raw);
-  if (!isNaN(d)) return d.toISOString().slice(0,10);
-  return null;
-}
-
-// ✅ Fixed: Customer Talk Duration comes as seconds (number or string)
-function parseDuration(row) {
-  const raw = row['Customer Talk Duration'];
-  if (raw === '' || raw === null || raw === undefined) return 0;
-  const n = parseFloat(raw);
-  return isNaN(n) ? 0 : Math.max(0, n);
-}
-
 /* ─── FETCH ──────────────────────────────────────────────────── */
 let chartInstances = [];
-let ALL_DATA = [];
-
 function destroyCharts() { chartInstances.forEach(c => c.destroy()); chartInstances = []; }
 
 async function loadData() {
-  const dashRoot = document.getElementById('dash-root');
-  if (dashRoot) {
-    dashRoot.innerHTML = `<div class="loading-screen">
+  const app = document.getElementById('app');
+  app.innerHTML = `<div class="loading-screen">
     <div class="spinner"></div>
     <div class="loading-text">Loading data…</div>
-    <div class="loading-sub">Please wait while we fetch your call records</div>
+    <div class="loading-sub">Please wait</div>
   </div>`;
-  }
   destroyCharts();
 
   try {
-    const res = await fetch(SCRIPT_URL + '?ts=' + Date.now()); // cache-bust
+    const res = await fetch(SCRIPT_URL);
     if (!res.ok) throw new Error('HTTP ' + res.status);
     const text = await res.text();
-
     let raw;
     try { raw = JSON.parse(text); }
-    catch {
-      const m = text.match(/\[[\s\S]*\]/);
-      if (m) raw = JSON.parse(m[0]);
-      else throw new Error('Invalid JSON from Apps Script');
-    }
+    catch { const m = text.match(/\[[\s\S]*\]/); if(m) raw=JSON.parse(m[0]); else throw new Error('Invalid JSON'); }
 
-    // ✅ Handles {status, data, count} wrapper from your Apps Script
     const rows = Array.isArray(raw) ? raw : (raw.data || raw.rows || []);
-    if (!rows.length) throw new Error('No records returned. Check your sheet name is "Data Sheet".');
+    if (!rows.length) throw new Error('No records returned from Apps Script.');
 
-    ALL_ROWS = rows;
-    renderDashboard(rows);
+    ALL_DATA = rows;
+    renderFilterBar();
+    applyFilters();
 
     document.getElementById('last-updated').textContent = 'Updated ' + new Date().toLocaleTimeString();
     document.getElementById('footer').style.display = '';
     document.getElementById('footer-text').textContent =
-      `${fmt(rows.length)} records processed · Sheet: "Data Sheet" · Last refreshed: ${new Date().toLocaleString()}`;
+      `${fmt(rows.length)} records processed · Data source: Google Apps Script · Last refreshed: ${new Date().toLocaleString()}`;
 
   } catch(err) {
+    const app = document.getElementById('app');
     app.innerHTML = `<div class="error-card">
       <h3>⚠ Could not load data</h3>
       <p style="margin-top:8px"><strong>${err.message}</strong></p>
-      <p style="margin-top:12px">
-        Make sure your Apps Script is deployed with <code>Who has access: Anyone</code>.<br>
-        Expected sheet name: <code>Data Sheet</code>
-      </p>
+      <p style="margin-top:12px">Please ensure your Apps Script is deployed with access set to
+      <code>Anyone</code>, and that the response is a JSON array with headers:<br>
+      <code>Interaction Type</code>, <code>Agent Name</code>, <code>Category</code>,
+      <code>Status1</code>, <code>Customer Talk Duration</code></p>
       <button onclick="loadData()" style="margin-top:16px;padding:8px 20px;border-radius:8px;
         background:#0694a2;color:white;border:none;cursor:pointer;font-size:13px;font-weight:600">
         Retry
@@ -450,10 +336,13 @@ function renderFilterBar() {
     <div class="filter-bar">
       <div class="filter-group">
         <label>Agent</label>
-        <select id="f-agent">
-          <option value="">All Agents</option>
-          ${agents.map(a => `<option value="${a}">${a}</option>`).join('')}
-        </select>
+        <div style="display:flex; flex-direction:column; gap:4px;">
+          <input type="text" id="f-agent-search" placeholder="Search agent..." oninput="updateAgentDropdown(this.value)" style="width:140px;">
+          <select id="f-agent" style="width:140px;">
+            <option value="">All Agents</option>
+            ${agents.map(a => `<option value="${a}">${a}</option>`).join('')}
+          </select>
+        </div>
       </div>
       <div class="filter-group">
         <label>RID</label>
@@ -484,6 +373,18 @@ function renderFilterBar() {
   `;
 }
 
+function updateAgentDropdown(query) {
+  const select = document.getElementById('f-agent');
+  const agents = [...new Set(ALL_DATA.map(r => (r['Agent Name'] || 'Unknown').trim()))].sort();
+  const filtered = agents.filter(a => a.toLowerCase().includes(query.toLowerCase()));
+  
+  let html = '<option value="">All Agents</option>';
+  filtered.forEach(a => {
+    html += `<option value="${a}">${a}</option>`;
+  });
+  select.innerHTML = html;
+}
+
 function setDatePreset(type) {
   if (!type) return;
   const now = new Date();
@@ -492,15 +393,11 @@ function setDatePreset(type) {
     return `${y}-${m}-${day}`;
   };
   let from = '', to = f(now);
-  if (type === 'today') {
-    from = to;
-  } else if (type === '7days') {
-    const start = new Date();
-    start.setDate(now.getDate() - 7);
-    from = f(start);
+  if (type === 'today') from = to;
+  else if (type === '7days') {
+    const start = new Date(); start.setDate(now.getDate() - 7); from = f(start);
   } else if (type === 'month') {
-    const start = new Date(now.getFullYear(), now.getMonth(), 1);
-    from = f(start);
+    const start = new Date(now.getFullYear(), now.getMonth(), 1); from = f(start);
   }
   document.getElementById('f-from').value = from;
   document.getElementById('f-to').value = to;
@@ -514,27 +411,29 @@ function applyFilters() {
   const toDate = document.getElementById('f-to').value;
 
   const filtered = ALL_DATA.filter(row => {
-    // Agent filter
     if (agent && (row['Agent Name'] || 'Unknown').trim() !== agent) return false;
     
-    // RID filter (assumes 'RID' column or 'Customer Number' as fallback)
     const rowRid = String(row['RID'] || row['Customer Number'] || '').toLowerCase();
     if (rid && !rowRid.includes(rid)) return false;
     
-    // Date range filter
-    const rowDate = parseDate(row);
-    if (fromDate && rowDate < fromDate) return false;
-    if (toDate && rowDate > toDate) return false;
-
+    const dateVal = row['Date']||row['Date (mm/dd/yyyy)']||row['DateTime']||row['Timestamp']||'';
+    if (fromDate || toDate) {
+      const d = new Date(dateVal);
+      if (!isNaN(d.getTime())) {
+        const rowDate = d.toISOString().slice(0,10);
+        if (fromDate && rowDate < fromDate) return false;
+        if (toDate && rowDate > toDate) return false;
+      }
+    }
     return true;
   });
 
-  const d = processData(filtered);
-  renderDashboard(d, filtered.length);
+  renderDashboard(processData(filtered), filtered.length);
 }
 
 function resetFilters() {
   document.getElementById('f-agent').value = "";
+  if (document.getElementById('f-agent-search')) document.getElementById('f-agent-search').value = "";
   document.getElementById('f-rid').value = "";
   document.getElementById('f-from').value = "";
   document.getElementById('f-to').value = "";
@@ -544,455 +443,271 @@ function resetFilters() {
 
 /* ─── PROCESS DATA ───────────────────────────────────────────── */
 function processData(rows) {
-  // Per-agent maps
-  const agentStatus  = {};   // agent → { Done, Close, ... , total }
-  const agentCat     = {};   // agent → { Issues, Close, Training, ... , total }
-  const agentTalk    = {};   // agent → { allSecs, allCnt, doneSecs, doneCnt, dates: Set }
-  const agentMissed  = {};   // agent → count of Ismissed='TRUE'
-  const agentCalledBack = {}; // agent → count of Called_Back='TRUE'
-
-  // Hour-wise
-  const hourStatus   = {};   // hh:00 → { Done, Close, ... , total }
-  const hourCat      = {};   // hh:00 → { Issues, Close, ... }
-
-  // Category × Status
-  const catStatus    = {};   // cat → { Done, Close, ... , total }
-
-  // CallRelatedTo breakdown
-  const callRelated  = {};   // callRelatedTo → count
-
-  // Interaction type
-  const interactionType = {}; // type → count
-
-  // Hyperpure / Petpooja flags
-  let hyperpureLeads = 0, petpoojaOrders = 0;
-
-  // Overall totals
-  let totalCalls=0, doneCalls=0, closeCalls=0, notRel=0;
-  let issues=0, training=0, physVisit=0;
-  let missedCalls=0, calledBackCount=0;
+  const agentStatus  = {};
+  const agentCat     = {};
+  const agentTalk    = {};
+  const hourStatus   = {};
+  const hourCat      = {};
+  const catStatus    = {};
+  let totalCalls=0, doneCalls=0, closeCalls=0, notRel=0, issues=0, training=0, physVisit=0;
 
   for (const row of rows) {
-    const agent   = (row['Agent Name']      || 'Unknown').trim();
-    // ✅ Normalize WhatsApp Call casing
-    const rawCat  = (row['Category']        || '').trim();
-    const cat     = rawCat.toLowerCase() === 'whatsapp call' ? 'WhatsApp Call' : (rawCat || '(none)');
-    const st      = (row['Status1']         || '(none)').trim();
-    const itype   = (row['Interaction Type']|| '(none)').trim();
-    // ✅ CallRealatedTo — note the typo is in the sheet header
-    const crt     = (row['CallRealatedTo']  || '(none)').trim();
-    // ✅ Ismissed and Called_Back columns
-    const isMissed   = String(row['Ismissed']  || '').trim().toUpperCase() === 'TRUE';
-    const calledBack = String(row['Called_Back']|| '').trim().toUpperCase() === 'TRUE';
-    // ✅ Hyperpure_Lead and Purchase_by_Petpooja
-    const isHP  = String(row['Hyperpure_Lead']       || '').trim().toUpperCase() === 'TRUE';
-    const isPP  = String(row['Purchase_by_Petpooja']  || '').trim().toUpperCase() === 'TRUE';
+    const agent = (row['Agent Name']||'Unknown').trim();
+    const cat   = (row['Category']||'(none)').trim();
+    const st    = (row['Status1']||'(none)').trim();
+    const dur   = parseFloat(row['Customer Talk Duration']||0);
 
-    const dur  = parseDuration(row);
-    const hour = parseHour(row);
-    const date = parseDate(row);
+    // Try to extract hour from any date-like column
+    let hour = -1;
+    const dateVal = row['Date']||row['date']||row['DateTime']||row['Timestamp']||row['timestamp']||'';
+    if (dateVal) { const d = new Date(dateVal); if (!isNaN(d)) hour = d.getHours(); }
 
     totalCalls++;
-    if (st === 'Done')          doneCalls++;
-    if (st === 'Close')         closeCalls++;
-    if (st === 'Not Related')   notRel++;
-    if (cat === 'Issues')       issues++;
-    if (cat === 'Training')     training++;
-    if (cat === 'Physical Visit') physVisit++;
-    if (isMissed)               missedCalls++;
-    if (calledBack)             calledBackCount++;
-    if (isHP)                   hyperpureLeads++;
-    if (isPP)                   petpoojaOrders++;
+    if (st==='Done')        doneCalls++;
+    if (st==='Close')       closeCalls++;
+    if (st==='Not Related') notRel++;
+    if (cat==='Issues')     issues++;
+    if (cat==='Training')   training++;
+    if (cat==='Physical Visit') physVisit++;
 
     /* agent × status */
-    if (!agentStatus[agent]) {
-      agentStatus[agent] = {Done:0,Close:0,'Not Related':0,'Other Language':0,'Physical Visit':0,'Tech Concern':0,total:0};
-    }
+    if (!agentStatus[agent]) agentStatus[agent] = {Done:0,Close:0,'Not Related':0,'Other Language':0,'Physical Visit':0,'Tech Concern':0,total:0};
     agentStatus[agent][st]  = (agentStatus[agent][st]||0)+1;
     agentStatus[agent].total++;
 
     /* agent × category */
-    if (!agentCat[agent]) {
-      agentCat[agent] = {Issues:0,Close:0,Training:0,'Physical Visit':0,'Google Meet':0,'WhatsApp Call':0,total:0};
-    }
-    agentCat[agent][cat] = (agentCat[agent][cat]||0)+1;
+    if (!agentCat[agent]) agentCat[agent] = {Issues:0,Close:0,Training:0,'Physical Visit':0,'Google Meet':0,'WhatsApp Call':0,total:0};
+    agentCat[agent][cat]    = (agentCat[agent][cat]||0)+1;
     agentCat[agent].total++;
 
-    /* agent talk time + working days */
-    if (!agentTalk[agent]) agentTalk[agent] = {allSecs:0,allCnt:0,doneSecs:0,doneCnt:0,dates:new Set()};
-    if (dur > 0) {
+    /* talk time */
+    if (!agentTalk[agent]) agentTalk[agent] = {allSecs:0,allCnt:0,doneSecs:0,doneCnt:0};
+    if (!isNaN(dur) && dur > 0) {
       agentTalk[agent].allSecs += dur;
       agentTalk[agent].allCnt++;
+      if (st==='Done') { agentTalk[agent].doneSecs += dur; agentTalk[agent].doneCnt++; }
     }
-    if (st === 'Done' && dur > 0) {
-      agentTalk[agent].doneSecs += dur;
-      agentTalk[agent].doneCnt++;
-    }
-    // ✅ Working days = unique dates per agent
-    if (date) agentTalk[agent].dates.add(date);
-
-    /* agent missed / called back */
-    agentMissed[agent]    = (agentMissed[agent]||0)    + (isMissed ? 1 : 0);
-    agentCalledBack[agent]= (agentCalledBack[agent]||0) + (calledBack ? 1 : 0);
 
     /* hour × status & category */
     if (hour >= 0) {
       const hk = String(hour).padStart(2,'0')+':00';
       if (!hourStatus[hk]) hourStatus[hk] = {Done:0,Close:0,'Not Related':0,'Other Language':0,'Physical Visit':0,'Tech Concern':0,total:0};
-      hourStatus[hk][st] = (hourStatus[hk][st]||0)+1;
+      hourStatus[hk][st]  = (hourStatus[hk][st]||0)+1;
       hourStatus[hk].total++;
       if (!hourCat[hk]) hourCat[hk] = {};
-      hourCat[hk][cat]   = (hourCat[hk][cat]||0)+1;
+      hourCat[hk][cat]    = (hourCat[hk][cat]||0)+1;
     }
 
     /* category × status */
-    if (!catStatus[cat]) catStatus[cat] = {Done:0,Close:0,'Not Related':0,'Other Language':0,'Physical Visit':0,'Tech Concern':0,total:0};
-    catStatus[cat][st] = (catStatus[cat][st]||0)+1;
+    if (!catStatus[cat]) catStatus[cat] = {Done:0,Close:0,'Not Related':0,'Other Language':0,'Physical Visit':0,total:0};
+    catStatus[cat][st]  = (catStatus[cat][st]||0)+1;
     catStatus[cat].total++;
-
-    /* CallRealatedTo */
-    callRelated[crt] = (callRelated[crt]||0)+1;
-
-    /* Interaction type */
-    interactionType[itype] = (interactionType[itype]||0)+1;
   }
 
-  return {
-    totalCalls, doneCalls, closeCalls, notRel,
-    issues, training, physVisit,
-    missedCalls, calledBackCount, hyperpureLeads, petpoojaOrders,
-    agentStatus, agentCat, agentTalk, agentMissed, agentCalledBack,
-    hourStatus, hourCat, catStatus, callRelated, interactionType
-  };
+  return { totalCalls, doneCalls, closeCalls, notRel, issues, training, physVisit,
+    agentStatus, agentCat, agentTalk, hourStatus, hourCat, catStatus };
 }
 
 /* ─── RENDER DASHBOARD ───────────────────────────────────────── */
-function renderDashboard(rows) {
-  const app = document.getElementById('app');
-  const d = processData(rows);
+function renderDashboard(d, rowCount) {
+  const dashRoot = document.getElementById('dash-root');
 
-  const topAgentsByTotal = Object.entries(d.agentStatus).sort((a,b)=>b[1].total-a[1].total);
-  const topAgentsByCat   = Object.entries(d.agentCat).sort((a,b)=>b[1].total-a[1].total);
-  const talkAgents       = Object.entries(d.agentTalk).sort((a,b)=>b[1].allCnt-a[1].allCnt);
+  /* totals for category columns */
+  const statusTotals = STATUS_KEYS.map(k =>
+    Object.values(d.agentStatus).reduce((s,a)=>s+(a[k]||0),0));
+  const catTotals = CAT_KEYS.map(k =>
+    Object.values(d.agentCat).reduce((s,a)=>s+(a[k]||0),0));
+
+  /* top agents */
+  const topAgentsByTotal = Object.entries(d.agentStatus).sort((a,b)=>b[1].total-a[1].total).slice(0,20);
+  const topAgentsByCat   = Object.entries(d.agentCat).sort((a,b)=>b[1].total-a[1].total).slice(0,20);
+  const talkAgents       = Object.entries(d.agentTalk)
+    .filter(([,v])=>v.allCnt>0).sort((a,b)=>b[1].allCnt-a[1].allCnt).slice(0,20);
 
   const hasHourData = Object.keys(d.hourStatus).length > 0;
-  const hours  = Object.keys(d.hourStatus).sort();
-  const hLabels = hours.map(h => {
-    const n = (parseInt(h)+1)%24;
-    return h.replace(':00','') + ':00–' + String(n).padStart(2,'0') + ':00';
+  const hours = Object.keys(d.hourStatus).sort();
+  const hLabels = hours.map(h=>{
+    const next = (parseInt(h)+1)%24;
+    return h.replace(':00','') + ':00 – ' + String(next).padStart(2,'0') + ':00';
   });
-
-  /* Category-status totals row */
-  const catStatusKeys = Object.keys(d.catStatus)
-    .sort((a,b) => d.catStatus[b].total - d.catStatus[a].total);
-  const catTotRow = catStatusKeys.reduce((acc,cat) => {
-    const v = d.catStatus[cat];
-    acc.Done           += (v.Done||0);
-    acc.Close          += (v.Close||0);
-    acc['Not Related'] += (v['Not Related']||0);
-    acc['Other Language']+=(v['Other Language']||0);
-    acc['Physical Visit']+=(v['Physical Visit']||0);
-    acc['Tech Concern'] += (v['Tech Concern']||0);
-    acc.total          += v.total;
-    return acc;
-  },{Done:0,Close:0,'Not Related':0,'Other Language':0,'Physical Visit':0,'Tech Concern':0,total:0});
-
-  /* Agent-status totals */
-  const asTot={Done:0,Close:0,'Not Related':0,'Other Language':0,'Physical Visit':0,'Tech Concern':0,total:0};
-  for(const [,v] of topAgentsByTotal) for(const k of Object.keys(asTot)) asTot[k]=(asTot[k]||0)+(v[k]||0);
-
-  /* Agent-category totals */
-  const acTot={Issues:0,Close:0,Training:0,'Physical Visit':0,'Google Meet':0,'WhatsApp Call':0,total:0};
-  for(const [,v] of topAgentsByCat) for(const k of Object.keys(acTot)) acTot[k]=(acTot[k]||0)+(v[k]||0);
-
-  /* CallRelatedTo sorted */
-  const crtEntries = Object.entries(d.callRelated).sort((a,b)=>b[1]-a[1]);
-  const maxCRT = crtEntries[0]?.[1] || 1;
-
-  /* Interaction type sorted */
-  const itEntries = Object.entries(d.interactionType).sort((a,b)=>b[1]-a[1]);
 
   /* ── KPIs ── */
   const kpiData = [
-    { label:'Total Calls',       value: fmt(d.totalCalls),        meta: '100% of interactions',            color:'c-teal'   },
-    { label:'Done',              value: fmt(d.doneCalls),          meta: pct(d.doneCalls,d.totalCalls),     color:'c-green'  },
-    { label:'Close',             value: fmt(d.closeCalls),         meta: pct(d.closeCalls,d.totalCalls),    color:'c-amber'  },
-    { label:'Not Related',       value: fmt(d.notRel),             meta: pct(d.notRel,d.totalCalls),        color:'c-pink'   },
-    { label:'Missed Calls',      value: fmt(d.missedCalls),        meta: pct(d.missedCalls,d.totalCalls),   color:'c-red'    },
-    { label:'Called Back',       value: fmt(d.calledBackCount),    meta: pct(d.calledBackCount,d.totalCalls), color:'c-blue' },
-    { label:'Hyperpure Leads',   value: fmt(d.hyperpureLeads),     meta: pct(d.hyperpureLeads,d.totalCalls), color:'c-purple'},
-    { label:'Petpooja Orders',   value: fmt(d.petpoojaOrders),     meta: pct(d.petpoojaOrders,d.totalCalls), color:'c-olive' },
-    { label:'Total Issues',      value: fmt(d.issues),             meta: pct(d.issues,d.totalCalls),        color:'c-purple' },
-    { label:'Total Training',    value: fmt(d.training),           meta: pct(d.training,d.totalCalls),      color:'c-blue'   },
-    { label:'Physical Visit',    value: fmt(d.physVisit),          meta: pct(d.physVisit,d.totalCalls),     color:'c-olive'  },
+    { label:'Total Calls',    value: fmt(d.totalCalls),  meta: '100% of all interactions' },
+    { label:'Done Calls',     value: fmt(d.doneCalls),   meta: pct(d.doneCalls,d.totalCalls)+' of total' },
+    { label:'Close Calls',    value: fmt(d.closeCalls),  meta: pct(d.closeCalls,d.totalCalls)+' of total' },
+    { label:'Not Related',    value: fmt(d.notRel),      meta: pct(d.notRel,d.totalCalls)+' of total' },
+    { label:'Total Issues',   value: fmt(d.issues),      meta: pct(d.issues,d.totalCalls)+' of total' },
+    { label:'Total Training', value: fmt(d.training),    meta: pct(d.training,d.totalCalls)+' of total' },
+    { label:'Physical Visit', value: fmt(d.physVisit),   meta: pct(d.physVisit,d.totalCalls)+' of total' },
   ];
 
-  app.innerHTML = `
+  /* ── Category-status table rows ── */
+  const catStatusKeys = Object.keys(d.catStatus);
+  const catTotRow = catStatusKeys.reduce((acc,cat)=>{
+    const v=d.catStatus[cat];
+    acc.Done+=(v.Done||0); acc.Close+=(v.Close||0);
+    acc['Not Related']+=(v['Not Related']||0); acc['Other Language']+=(v['Other Language']||0);
+    acc['Physical Visit']+=(v['Physical Visit']||0); acc.total+=v.total;
+    return acc;
+  },{Done:0,Close:0,'Not Related':0,'Other Language':0,'Physical Visit':0,total:0});
 
-    <!-- ── KPIs ── -->
+  /* ── Agent-status table totals ── */
+  const asTot={Done:0,Close:0,'Not Related':0,'Other Language':0,'Physical Visit':0,'Tech Concern':0,total:0};
+  for(const [,v] of topAgentsByTotal) for(const k of Object.keys(asTot)) asTot[k]=(asTot[k]||0)+(v[k]||0);
+
+  /* ── Agent-category table totals ── */
+  const acTot={Issues:0,Close:0,Training:0,'Physical Visit':0,'Google Meet':0,'WhatsApp Call':0,total:0};
+  for(const [,v] of topAgentsByCat) for(const k of Object.keys(acTot)) acTot[k]=(acTot[k]||0)+(v[k]||0);
+
+  /* ── BUILD HTML ── */
+  dashRoot.innerHTML = `
+    <!-- KPIs -->
     <p class="section-label">KPI Summary</p>
     <div class="kpi-grid">
-      ${kpiData.map(k=>`<div class="kpi-card ${k.color}">
+      ${kpiData.map(k=>`<div class="kpi-card">
         <div class="kpi-label">${k.label}</div>
         <div class="kpi-value">${k.value}</div>
         <div class="kpi-meta">${k.meta}</div>
       </div>`).join('')}
     </div>
 
-    <!-- ── Pie charts ── -->
+    <!-- Pie charts -->
     <p class="section-label">Month activity breakdown</p>
-    <div class="three-col">
+    <div class="two-col">
       <div class="panel">
         <div class="panel-title">By Status <span class="panel-title-badge">Status1</span></div>
         <div class="legend" id="leg-pie-status"></div>
-        <div class="chart-wrap-sm"><canvas id="pieStatus"></canvas></div>
+        <div class="chart-wrap-sm"><canvas id="pieStatus" role="img" aria-label="Pie chart of month activity by status"></canvas></div>
       </div>
       <div class="panel">
         <div class="panel-title">By Category <span class="panel-title-badge">Category</span></div>
         <div class="legend" id="leg-pie-cat"></div>
-        <div class="chart-wrap-sm"><canvas id="pieCat"></canvas></div>
-      </div>
-      <div class="panel">
-        <div class="panel-title">By Interaction Type <span class="panel-title-badge">Interaction Type</span></div>
-        <div class="legend" id="leg-pie-itype"></div>
-        <div class="chart-wrap-sm"><canvas id="pieItype"></canvas></div>
+        <div class="chart-wrap-sm"><canvas id="pieCat" role="img" aria-label="Pie chart of month activity by category"></canvas></div>
       </div>
     </div>
 
-    <!-- ── CallRelatedTo breakdown ── -->
-    <p class="section-label">Call Related To — breakdown</p>
-    <div class="two-col">
-      <div class="panel">
-        <div class="panel-title">Call topics <span class="panel-title-badge">CallRealatedTo</span></div>
-        <div id="crt-bars">
-          ${crtEntries.slice(0,15).map(([k,v])=>`
-            <div class="hbar-row">
-              <div class="hbar-label" title="${k}">${k}</div>
-              <div class="hbar-track"><div class="hbar-fill" style="width:${(v/maxCRT*100).toFixed(1)}%;background:var(--teal)"></div></div>
-              <div class="hbar-val">${fmt(v)}</div>
-            </div>`).join('')}
-        </div>
-      </div>
-      <div class="panel">
-        <div class="panel-title">Missed & Called Back <span class="panel-title-badge">Ismissed · Called_Back</span></div>
-        <div class="chart-wrap-sm"><canvas id="missedChart"></canvas></div>
-      </div>
-    </div>
-
-    <!-- ── Hyperpure / Petpooja ── -->
-    <p class="section-label">Hyperpure & Petpooja performance</p>
-    <div class="two-col">
-      <div class="panel">
-        <div class="panel-title">Hyperpure Leads by Agent <span class="panel-title-badge">Hyperpure_Lead</span></div>
-        <div class="table-wrap"><table>
-          <thead><tr><th>Agent</th><th>Total Calls</th><th>Hyperpure Leads</th><th>Conversion %</th></tr></thead>
-          <tbody>
-            ${Object.entries(d.agentStatus)
-                .map(([name,v])=>{
-                  const leads = rows.filter(r=>(r['Agent Name']||'').trim()===name && String(r['Hyperpure_Lead']||'').trim().toUpperCase()==='TRUE').length;
-                  return [name,v.total,leads];
-                })
-                .filter(([,tc,l])=>tc>0)
-                .sort((a,b)=>b[2]-a[2])
-                .slice(0,15)
-                .map(([name,tc,leads])=>`<tr>
-                  <td>${name}</td><td>${fmt(tc)}</td>
-                  <td>${fmt(leads)}</td>
-                  <td>${pct(leads,tc)}</td>
-                </tr>`).join('')}
-          </tbody>
-        </table></div>
-      </div>
-      <div class="panel">
-        <div class="panel-title">Petpooja Purchases by Agent <span class="panel-title-badge">Purchase_by_Petpooja</span></div>
-        <div class="table-wrap"><table>
-          <thead><tr><th>Agent</th><th>Total Calls</th><th>Purchases</th><th>Rate %</th></tr></thead>
-          <tbody>
-            ${Object.entries(d.agentStatus)
-                .map(([name,v])=>{
-                  const pp = rows.filter(r=>(r['Agent Name']||'').trim()===name && String(r['Purchase_by_Petpooja']||'').trim().toUpperCase()==='TRUE').length;
-                  return [name,v.total,pp];
-                })
-                .filter(([,tc,pp])=>tc>0)
-                .sort((a,b)=>b[2]-a[2])
-                .slice(0,15)
-                .map(([name,tc,pp])=>`<tr>
-                  <td>${name}</td><td>${fmt(tc)}</td>
-                  <td>${fmt(pp)}</td>
-                  <td>${pct(pp,tc)}</td>
-                </tr>`).join('')}
-          </tbody>
-        </table></div>
-      </div>
-    </div>
-
-    <!-- ── Category × Status ── -->
+    <!-- Category-wise status table -->
     <p class="section-label">Category wise status</p>
     <div class="panel">
       <div class="panel-title">Category × Status breakdown</div>
       <div class="table-wrap"><table>
         <thead><tr>
-          <th>Category</th><th>Done</th><th>Close</th><th>Not Related</th>
-          <th>Other Language</th><th>Physical Visit</th><th>Tech Concern</th><th>Total</th>
+          <th>Category</th><th>Done</th><th>Close</th><th>Not Related</th><th>Other Language</th><th>Physical Visit</th><th>Total</th>
         </tr></thead>
         <tbody>
           ${catStatusKeys.map(cat=>{const v=d.catStatus[cat];return`<tr>
             <td>${cat}</td>
-            <td>${fmt(v.Done||0)}</td>
-            <td>${fmt(v.Close||0)}</td>
-            <td>${fmt(v['Not Related']||0)}</td>
-            <td>${fmt(v['Other Language']||0)}</td>
-            <td>${fmt(v['Physical Visit']||0)}</td>
-            <td>${fmt(v['Tech Concern']||0)}</td>
-            <td>${fmt(v.total)}</td>
+            <td>${fmt(v.Done||0)}</td><td>${fmt(v.Close||0)}</td>
+            <td>${fmt(v['Not Related']||0)}</td><td>${fmt(v['Other Language']||0)}</td>
+            <td>${fmt(v['Physical Visit']||0)}</td><td>${fmt(v.total)}</td>
           </tr>`;}).join('')}
         </tbody>
         <tfoot><tr>
-          <td>Total</td>
-          <td>${fmt(catTotRow.Done)}</td>
-          <td>${fmt(catTotRow.Close)}</td>
-          <td>${fmt(catTotRow['Not Related'])}</td>
-          <td>${fmt(catTotRow['Other Language'])}</td>
-          <td>${fmt(catTotRow['Physical Visit'])}</td>
-          <td>${fmt(catTotRow['Tech Concern'])}</td>
-          <td>${fmt(catTotRow.total)}</td>
+          <td>Total</td><td>${fmt(catTotRow.Done)}</td><td>${fmt(catTotRow.Close)}</td>
+          <td>${fmt(catTotRow['Not Related'])}</td><td>${fmt(catTotRow['Other Language'])}</td>
+          <td>${fmt(catTotRow['Physical Visit'])}</td><td>${fmt(catTotRow.total)}</td>
         </tr></tfoot>
       </table></div>
     </div>
 
-    <!-- ── Hour-wise charts ── -->
+    <!-- Hour-wise charts -->
     <p class="section-label">Hour wise call trends</p>
     ${hasHourData ? `
     <div class="panel">
-      <div class="panel-title">Hourly calls — by status <span class="panel-title-badge">Time column</span></div>
+      <div class="panel-title">This month's hour wise calls — by status</div>
       <div class="legend" id="leg-hour-status"></div>
-      <div class="chart-wrap-lg"><canvas id="hourStatusChart"></canvas></div>
+      <div class="chart-wrap-lg"><canvas id="hourStatusChart" role="img" aria-label="Line chart of hour wise calls by status"></canvas></div>
     </div>
     <div class="panel">
-      <div class="panel-title">Hourly calls — by category</div>
+      <div class="panel-title">This month's hour wise calls — by category</div>
       <div class="legend" id="leg-hour-cat"></div>
-      <div class="chart-wrap-lg"><canvas id="hourCatChart"></canvas></div>
-    </div>` : `
-    <div class="panel">
-      <p style="color:#718096;font-size:13px;padding:1rem 0">
-        ⚠ No time data detected. Ensure the <strong>Time</strong> column in your sheet contains HH:MM values.
-      </p>
-    </div>`}
+      <div class="chart-wrap-lg"><canvas id="hourCatChart" role="img" aria-label="Line chart of hour wise calls by category"></canvas></div>
+    </div>` : `<div class="panel"><p style="color:#718096;font-size:13px;padding:1rem 0">
+      No date/time column detected. Add a <strong>Date</strong> or <strong>Timestamp</strong> column to your sheet to enable hourly trend charts.
+    </p></div>`}
 
-    <!-- ── Agent × Status ── -->
-    <p class="section-label">Agent performance — by status</p>
+    <!-- Agent × Status table -->
+    <p class="section-label">Month activity — agent performance by status</p>
     <div class="panel">
-      <div class="panel-title">Agent × Status <span class="panel-title-badge">Status1</span></div>
+      <div class="panel-title">Agent × Status <span class="panel-title-badge">Status1 / Status1</span></div>
       <div class="table-wrap"><table>
         <thead><tr>
-          <th>Agent Name</th><th>Done</th><th>Close</th><th>Not Related</th>
-          <th>Other Lang.</th><th>Phys. Visit</th><th>Tech Concern</th><th>Total</th>
+          <th>Agent Name</th><th>Done</th><th>Close</th><th>Not Related</th><th>Other Lang.</th><th>Phys. Visit</th><th>Tech Concern</th><th>Total</th>
         </tr></thead>
         <tbody>
           ${topAgentsByTotal.map(([name,v])=>`<tr>
             <td>${name}</td>
-            <td>${fmt(v.Done)}</td>
-            <td>${fmt(v.Close)}</td>
-            <td>${fmt(v['Not Related'])}</td>
-            <td>${fmt(v['Other Language']||0)}</td>
-            <td>${fmt(v['Physical Visit']||0)}</td>
-            <td>${fmt(v['Tech Concern']||0)}</td>
+            <td>${fmt(v.Done)}</td><td>${fmt(v.Close)}</td>
+            <td>${fmt(v['Not Related'])}</td><td>${fmt(v['Other Language']||0)}</td>
+            <td>${fmt(v['Physical Visit']||0)}</td><td>${fmt(v['Tech Concern']||0)}</td>
             <td>${fmt(v.total)}</td>
           </tr>`).join('')}
         </tbody>
         <tfoot><tr>
-          <td>Total</td>
-          <td>${fmt(asTot.Done)}</td>
-          <td>${fmt(asTot.Close)}</td>
-          <td>${fmt(asTot['Not Related'])}</td>
-          <td>${fmt(asTot['Other Language'])}</td>
-          <td>${fmt(asTot['Physical Visit'])}</td>
-          <td>${fmt(asTot['Tech Concern'])}</td>
+          <td>Total</td><td>${fmt(asTot.Done)}</td><td>${fmt(asTot.Close)}</td>
+          <td>${fmt(asTot['Not Related'])}</td><td>${fmt(asTot['Other Language'])}</td>
+          <td>${fmt(asTot['Physical Visit'])}</td><td>${fmt(asTot['Tech Concern'])}</td>
           <td>${fmt(asTot.total)}</td>
         </tr></tfoot>
       </table></div>
     </div>
 
-    <!-- ── Agent × Category ── -->
-    <p class="section-label">Agent performance — by category</p>
+    <!-- Agent × Category table -->
+    <p class="section-label">Month activity — agent performance by category</p>
     <div class="panel">
-      <div class="panel-title">Agent × Category <span class="panel-title-badge">Category</span></div>
+      <div class="panel-title">Agent × Category <span class="panel-title-badge">Category / Status1</span></div>
       <div class="table-wrap"><table>
         <thead><tr>
-          <th>Agent Name</th><th>Issues</th><th>Close</th><th>Training</th>
-          <th>Phys. Visit</th><th>Google Meet</th><th>WA Call</th><th>Total</th>
+          <th>Agent Name</th><th>Issues</th><th>Close</th><th>Training</th><th>Phys. Visit</th><th>Google Meet</th><th>WA Call</th><th>Total</th>
         </tr></thead>
         <tbody>
           ${topAgentsByCat.map(([name,v])=>`<tr>
             <td>${name}</td>
-            <td>${fmt(v.Issues||0)}</td>
-            <td>${fmt(v.Close||0)}</td>
-            <td>${fmt(v.Training||0)}</td>
-            <td>${fmt(v['Physical Visit']||0)}</td>
-            <td>${fmt(v['Google Meet']||0)}</td>
-            <td>${fmt(v['WhatsApp Call']||0)}</td>
+            <td>${fmt(v.Issues||0)}</td><td>${fmt(v.Close||0)}</td>
+            <td>${fmt(v.Training||0)}</td><td>${fmt(v['Physical Visit']||0)}</td>
+            <td>${fmt(v['Google Meet']||0)}</td><td>${fmt(v['WhatsApp Call']||v['Whatsapp Call']||0)}</td>
             <td>${fmt(v.total)}</td>
           </tr>`).join('')}
         </tbody>
         <tfoot><tr>
-          <td>Total</td>
-          <td>${fmt(acTot.Issues)}</td>
-          <td>${fmt(acTot.Close)}</td>
-          <td>${fmt(acTot.Training)}</td>
-          <td>${fmt(acTot['Physical Visit'])}</td>
-          <td>${fmt(acTot['Google Meet'])}</td>
-          <td>${fmt(acTot['WhatsApp Call'])}</td>
+          <td>Total</td><td>${fmt(acTot.Issues)}</td><td>${fmt(acTot.Close)}</td>
+          <td>${fmt(acTot.Training)}</td><td>${fmt(acTot['Physical Visit'])}</td>
+          <td>${fmt(acTot['Google Meet'])}</td><td>${fmt(acTot['WhatsApp Call'])}</td>
           <td>${fmt(acTot.total)}</td>
         </tr></tfoot>
       </table></div>
     </div>
 
-    <!-- ── Talk time analysis ── -->
+    <!-- Talk time analysis -->
     <p class="section-label">Talk time analysis</p>
     <div class="two-col">
       <div class="panel">
-        <div class="panel-title">Working days <span class="panel-title-badge">Date (mm/dd/yyyy)</span></div>
+        <div class="panel-title">Working days (dialer)</div>
         <div class="table-wrap"><table>
-          <thead><tr>
-            <th>Agent</th><th>Working Days</th><th>Total Calls</th><th>Calls/Day</th>
-            <th>Missed</th><th>Called Back</th>
-          </tr></thead>
+          <thead><tr><th>Agent</th><th>Working Days</th></tr></thead>
           <tbody>
-            ${talkAgents.map(([name,v])=>{
-              const wd = v.dates.size;
-              const tc = (d.agentStatus[name]||{}).total||0;
-              const missed = d.agentMissed[name]||0;
-              const cb = d.agentCalledBack[name]||0;
-              return `<tr>
-                <td>${name}</td>
-                <td>${wd > 0 ? wd : '—'}</td>
-                <td>${fmt(tc)}</td>
-                <td>${wd > 0 ? (tc/wd).toFixed(1) : '—'}</td>
-                <td>${missed > 0 ? `<span class="pill pill-red">${missed}</span>` : '0'}</td>
-                <td>${cb > 0 ? `<span class="pill pill-green">${cb}</span>` : '0'}</td>
-              </tr>`;
-            }).join('')}
+            ${talkAgents.map(([name,v])=>`<tr>
+              <td>${name}</td><td>${v.allCnt > 0 ? '—' : '0'}</td>
+            </tr>`).join('')}
           </tbody>
         </table></div>
+        <p style="font-size:11px;color:#718096;margin-top:10px">Working days require a date column in your dataset.</p>
       </div>
       <div class="panel">
-        <div class="panel-title">Avg vs Done talk time <span class="panel-title-badge">Customer Talk Duration</span></div>
+        <div class="panel-title">Avg vs Done talk time + variance</div>
         <div class="table-wrap"><table>
-          <thead><tr>
-            <th>Agent</th><th>Avg Talk Time</th><th>Done Avg</th><th>Total Duration</th><th>Variance</th>
-          </tr></thead>
+          <thead><tr><th>Agent</th><th>Avg Talk Time</th><th>Done Talk Time</th><th>Variance</th></tr></thead>
           <tbody>
             ${talkAgents.map(([name,v])=>{
               const avg  = v.allCnt  > 0 ? v.allSecs  / v.allCnt  : 0;
               const done = v.doneCnt > 0 ? v.doneSecs / v.doneCnt : 0;
-              // ✅ Variance: Done avg vs Overall avg (positive = Done calls took longer)
               const variance = done - avg;
               return `<tr>
                 <td>${name}</td>
                 <td>${secsToHMS(avg)}</td>
-                <td>${v.doneCnt > 0 ? secsToHMS(done) : '—'}</td>
-                <td>${secsToHMS(v.allSecs)}</td>
-                <td>${v.doneCnt > 0 ? varBadge(variance) : '—'}</td>
+                <td>${secsToHMS(done)}</td>
+                <td>${varBadge(variance)}</td>
               </tr>`;
             }).join('')}
           </tbody>
@@ -1001,75 +716,29 @@ function renderDashboard(rows) {
     </div>
   `;
 
-  /* ── CHARTS ── */
+  /* ── RENDER CHARTS ── */
   destroyCharts();
 
   /* Pie — Status */
-  const stVals  = STATUS_KEYS.map(k => Object.values(d.agentStatus).reduce((s,a)=>s+(a[k]||0),0));
+  const stVals = STATUS_KEYS.map(k =>
+    Object.values(d.agentStatus).reduce((s,a)=>s+(a[k]||0),0));
   const stTotal = stVals.reduce((a,b)=>a+b,0)||1;
   buildLegend('leg-pie-status', STATUS_KEYS, STATUS_COLORS, stVals, stTotal);
   chartInstances.push(new Chart(document.getElementById('pieStatus'), {
     type:'doughnut',
-    data:{ labels:STATUS_KEYS, datasets:[{
-      data: stVals,
-      backgroundColor: STATUS_KEYS.map(k=>STATUS_COLORS[k]),
-      borderWidth:2, borderColor:'#fff'
-    }]},
-    options:{responsive:true,maintainAspectRatio:false,
-      plugins:{legend:{display:false},tooltip:{callbacks:{label:ctx=>`${ctx.label}: ${fmt(ctx.raw)} (${pct(ctx.raw,stTotal)})`}}}}
+    data:{ labels:STATUS_KEYS, datasets:[{data:stVals, backgroundColor:STATUS_KEYS.map(k=>STATUS_COLORS[k]), borderWidth:2, borderColor:'#fff'}] },
+    options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{display:false},tooltip:{callbacks:{label:ctx=>`${ctx.label}: ${fmt(ctx.raw)} (${pct(ctx.raw,stTotal)})`}}}}
   }));
 
   /* Pie — Category */
-  const ctVals  = CAT_KEYS.map(k => Object.values(d.agentCat).reduce((s,a)=>s+(a[k]||0),0));
+  const ctVals = CAT_KEYS.map(k =>
+    Object.values(d.agentCat).reduce((s,a)=>s+(a[k]||0),0));
   const ctTotal = ctVals.reduce((a,b)=>a+b,0)||1;
   buildLegend('leg-pie-cat', CAT_KEYS, CAT_COLORS, ctVals, ctTotal);
   chartInstances.push(new Chart(document.getElementById('pieCat'), {
     type:'doughnut',
-    data:{ labels:CAT_KEYS, datasets:[{
-      data: ctVals,
-      backgroundColor: CAT_KEYS.map(k=>CAT_COLORS[k]),
-      borderWidth:2, borderColor:'#fff'
-    }]},
-    options:{responsive:true,maintainAspectRatio:false,
-      plugins:{legend:{display:false},tooltip:{callbacks:{label:ctx=>`${ctx.label}: ${fmt(ctx.raw)} (${pct(ctx.raw,ctTotal)})`}}}}
-  }));
-
-  /* Pie — Interaction Type */
-  const itKeys  = itEntries.map(([k])=>k);
-  const itVals  = itEntries.map(([,v])=>v);
-  const itTotal = itVals.reduce((a,b)=>a+b,0)||1;
-  const itColors = ['#0694a2','#ba7517','#e24b4a','#7f77dd','#1d9e75','#888780'];
-  buildLegend('leg-pie-itype', itKeys, Object.fromEntries(itKeys.map((k,i)=>[k,itColors[i%itColors.length]])), itVals, itTotal);
-  chartInstances.push(new Chart(document.getElementById('pieItype'), {
-    type:'doughnut',
-    data:{ labels:itKeys, datasets:[{
-      data: itVals,
-      backgroundColor: itKeys.map((_,i)=>itColors[i%itColors.length]),
-      borderWidth:2, borderColor:'#fff'
-    }]},
-    options:{responsive:true,maintainAspectRatio:false,
-      plugins:{legend:{display:false},tooltip:{callbacks:{label:ctx=>`${ctx.label}: ${fmt(ctx.raw)} (${pct(ctx.raw,itTotal)})`}}}}
-  }));
-
-  /* Bar — Missed vs Called Back per agent */
-  const mAgents = talkAgents.slice(0,15).map(([name])=>name);
-  chartInstances.push(new Chart(document.getElementById('missedChart'), {
-    type:'bar',
-    data:{
-      labels: mAgents,
-      datasets:[
-        { label:'Missed',      data: mAgents.map(n=>d.agentMissed[n]||0),     backgroundColor:'#e24b4a88', borderColor:'#e24b4a', borderWidth:1 },
-        { label:'Called Back', data: mAgents.map(n=>d.agentCalledBack[n]||0), backgroundColor:'#1d9e7588', borderColor:'#1d9e75', borderWidth:1 }
-      ]
-    },
-    options:{
-      responsive:true, maintainAspectRatio:false,
-      plugins:{legend:{display:true,position:'top',labels:{font:{size:11},boxWidth:12}}},
-      scales:{
-        x:{ticks:{font:{size:9},maxRotation:45},grid:{display:false}},
-        y:{beginAtZero:true,ticks:{font:{size:10}}}
-      }
-    }
+    data:{ labels:CAT_KEYS, datasets:[{data:ctVals, backgroundColor:CAT_KEYS.map(k=>CAT_COLORS[k]), borderWidth:2, borderColor:'#fff'}] },
+    options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{display:false},tooltip:{callbacks:{label:ctx=>`${ctx.label}: ${fmt(ctx.raw)} (${pct(ctx.raw,ctTotal)})`}}}}
   }));
 
   /* Line — Hour × Status */
@@ -1080,44 +749,38 @@ function renderDashboard(rows) {
       data:{
         labels: hLabels,
         datasets: STATUS_KEYS.map(k=>({
-          label: k,
-          data:  hours.map(h=>(d.hourStatus[h]||{})[k]||0),
+          label:k,
+          data: hours.map(h=>(d.hourStatus[h]||{})[k]||0),
           borderColor: STATUS_COLORS[k],
-          backgroundColor: STATUS_COLORS[k]+'22',
-          borderWidth:2, pointRadius:3, pointHoverRadius:5, tension:0.35, fill:false
+          backgroundColor: STATUS_COLORS[k]+'18',
+          borderWidth:2, pointRadius:4, pointHoverRadius:6, tension:0.35, fill:false
         }))
       },
       options:{responsive:true,maintainAspectRatio:false,
         plugins:{legend:{display:false},tooltip:{mode:'index',intersect:false}},
-        scales:{
-          x:{ticks:{maxRotation:45,font:{size:10}},grid:{color:'rgba(0,0,0,0.04)'}},
-          y:{beginAtZero:true,ticks:{font:{size:10}},grid:{color:'rgba(0,0,0,0.04)'}}
-        }}
+        scales:{x:{ticks:{maxRotation:45,font:{size:10}},grid:{color:'rgba(0,0,0,0.04)'}},
+                y:{beginAtZero:true,ticks:{font:{size:10}},grid:{color:'rgba(0,0,0,0.04)'}}}}
     }));
 
     /* Line — Hour × Category */
-    const allHourCatKeys = [...new Set(
-      Object.values(d.hourCat).flatMap(h=>Object.keys(h))
-    )].filter(k=>k&&k!=='(none)');
+    const allHourCatKeys = [...new Set(Object.values(d.hourCat).flatMap(h=>Object.keys(h)))].filter(k=>k&&k!=='(none)');
     buildLegend('leg-hour-cat', allHourCatKeys, CAT_COLORS);
     chartInstances.push(new Chart(document.getElementById('hourCatChart'), {
       type:'line',
       data:{
         labels: hLabels,
         datasets: allHourCatKeys.map(k=>({
-          label: k,
-          data:  hours.map(h=>(d.hourCat[h]||{})[k]||0),
+          label:k,
+          data: hours.map(h=>(d.hourCat[h]||{})[k]||0),
           borderColor: CAT_COLORS[k]||'#888',
-          backgroundColor: (CAT_COLORS[k]||'#888')+'22',
-          borderWidth:2, pointRadius:3, pointHoverRadius:5, tension:0.35, fill:false
+          backgroundColor: (CAT_COLORS[k]||'#888')+'18',
+          borderWidth:2, pointRadius:4, pointHoverRadius:6, tension:0.35, fill:false
         }))
       },
       options:{responsive:true,maintainAspectRatio:false,
         plugins:{legend:{display:false},tooltip:{mode:'index',intersect:false}},
-        scales:{
-          x:{ticks:{maxRotation:45,font:{size:10}},grid:{color:'rgba(0,0,0,0.04)'}},
-          y:{beginAtZero:true,ticks:{font:{size:10}},grid:{color:'rgba(0,0,0,0.04)'}}
-        }}
+        scales:{x:{ticks:{maxRotation:45,font:{size:10}},grid:{color:'rgba(0,0,0,0.04)'}},
+                y:{beginAtZero:true,ticks:{font:{size:10}},grid:{color:'rgba(0,0,0,0.04)'}}}}
     }));
   }
 }
@@ -1127,7 +790,7 @@ function buildLegend(elId, keys, colorMap, vals, total) {
   const el = document.getElementById(elId);
   if (!el) return;
   el.innerHTML = keys.map((k,i)=>{
-    const pctStr = (vals && total && vals[i] !== undefined) ? ` ${(vals[i]/total*100).toFixed(1)}%` : '';
+    const pctStr = vals && total ? ` ${(vals[i]/total*100).toFixed(1)}%` : '';
     return `<span class="legend-item">
       <span class="legend-dot" style="background:${colorMap[k]||'#888'}"></span>
       ${k}${pctStr}
