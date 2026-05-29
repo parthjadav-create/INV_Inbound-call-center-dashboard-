@@ -467,12 +467,44 @@ function renderFilterBar() {
         <label>To</label>
         <input type="date" id="f-to">
       </div>
+      <div class="filter-group">
+        <label>Presets</label>
+        <select id="f-preset" onchange="setDatePreset(this.value)">
+          <option value="">Custom</option>
+          <option value="today">Today</option>
+          <option value="7days">Last 7 Days</option>
+          <option value="month">This Month</option>
+        </select>
+      </div>
       <div style="display:flex; gap:8px; margin-left:auto;">
-        <button class="filter-reset" style="background:var(--teal); color:white" onclick="applyFilters()">Apply Filters</button>
+        <button class="filter-reset" style="background:var(--teal); color:white" onclick="applyFilters()">Apply</button>
         <button class="filter-reset" onclick="resetFilters()">Reset</button>
       </div>
     </div>
   `;
+}
+
+function setDatePreset(type) {
+  if (!type) return;
+  const now = new Date();
+  const f = d => {
+    const y = d.getFullYear(), m = ('0'+(d.getMonth()+1)).slice(-2), day = ('0'+d.getDate()).slice(-2);
+    return `${y}-${m}-${day}`;
+  };
+  let from = '', to = f(now);
+  if (type === 'today') {
+    from = to;
+  } else if (type === '7days') {
+    const start = new Date();
+    start.setDate(now.getDate() - 7);
+    from = f(start);
+  } else if (type === 'month') {
+    const start = new Date(now.getFullYear(), now.getMonth(), 1);
+    from = f(start);
+  }
+  document.getElementById('f-from').value = from;
+  document.getElementById('f-to').value = to;
+  applyFilters();
 }
 
 function applyFilters() {
@@ -506,6 +538,7 @@ function resetFilters() {
   document.getElementById('f-rid').value = "";
   document.getElementById('f-from').value = "";
   document.getElementById('f-to').value = "";
+  if (document.getElementById('f-preset')) document.getElementById('f-preset').value = "";
   applyFilters();
 }
 
