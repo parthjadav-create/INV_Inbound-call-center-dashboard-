@@ -269,10 +269,13 @@
 
 <!-- ══ MAIN ════════════════════════════════════════════════════ -->
 <main class="main" id="app">
+  <div id="filter-root"></div>
+  <div id="dash-root">
   <div class="loading-screen">
     <div class="spinner"></div>
     <div class="loading-text">Connecting to Google Sheets…</div>
     <div class="loading-sub">Fetching call records and computing metrics</div>
+  </div>
   </div>
 </main>
 
@@ -383,17 +386,19 @@ function parseDuration(row) {
 
 /* ─── FETCH ──────────────────────────────────────────────────── */
 let chartInstances = [];
-let ALL_ROWS = [];
+let ALL_DATA = [];
 
 function destroyCharts() { chartInstances.forEach(c => c.destroy()); chartInstances = []; }
 
 async function loadData() {
-  const app = document.getElementById('app');
-  app.innerHTML = `<div class="loading-screen">
+  const dashRoot = document.getElementById('dash-root');
+  if (dashRoot) {
+    dashRoot.innerHTML = `<div class="loading-screen">
     <div class="spinner"></div>
     <div class="loading-text">Loading data…</div>
     <div class="loading-sub">Please wait while we fetch your call records</div>
   </div>`;
+  }
   destroyCharts();
 
   try {
@@ -435,6 +440,73 @@ async function loadData() {
       </button>
     </div>`;
   }
+}
+
+function renderFilterBar() {
+  const filterRoot = document.getElementById('filter-root');
+  const agents = [...new Set(ALL_DATA.map(r => (r['Agent Name'] || 'Unknown').trim()))].sort();
+  
+  filterRoot.innerHTML = `
+    <div class="filter-bar">
+      <div class="filter-group">
+        <label>Agent</label>
+        <select id="f-agent">
+          <option value="">All Agents</option>
+          ${agents.map(a => `<option value="${a}">${a}</option>`).join('')}
+        </select>
+      </div>
+      <div class="filter-group">
+        <label>RID</label>
+        <input type="text" id="f-rid" placeholder="Search RID...">
+      </div>
+      <div class="filter-group">
+        <label>From</label>
+        <input type="date" id="f-from">
+      </div>
+      <div class="filter-group">
+        <label>To</label>
+        <input type="date" id="f-to">
+      </div>
+      <div style="display:flex; gap:8px; margin-left:auto;">
+        <button class="filter-reset" style="background:var(--teal); color:white" onclick="applyFilters()">Apply Filters</button>
+        <button class="filter-reset" onclick="resetFilters()">Reset</button>
+      </div>
+    </div>
+  `;
+}
+
+function applyFilters() {
+  const agent = document.getElementById('f-agent').value;
+  const rid = document.getElementById('f-rid').value.trim().toLowerCase();
+  const fromDate = document.getElementById('f-from').value;
+  const toDate = document.getElementById('f-to').value;
+
+  const filtered = ALL_DATA.filter(row => {
+    // Agent filter
+    if (agent && (row['Agent Name'] || 'Unknown').trim() !== agent) return false;
+    
+    // RID filter (assumes 'RID' column or 'Customer Number' as fallback)
+    const rowRid = String(row['RID'] || row['Customer Number'] || '').toLowerCase();
+    if (rid && !rowRid.includes(rid)) return false;
+    
+    // Date range filter
+    const rowDate = parseDate(row);
+    if (fromDate && rowDate < fromDate) return false;
+    if (toDate && rowDate > toDate) return false;
+
+    return true;
+  });
+
+  const d = processData(filtered);
+  renderDashboard(d, filtered.length);
+}
+
+function resetFilters() {
+  document.getElementById('f-agent').value = "";
+  document.getElementById('f-rid').value = "";
+  document.getElementById('f-from').value = "";
+  document.getElementById('f-to').value = "";
+  applyFilters();
 }
 
 /* ─── PROCESS DATA ───────────────────────────────────────────── */
