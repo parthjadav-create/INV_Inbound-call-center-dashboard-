@@ -509,6 +509,67 @@
   .rank-bar-fill { height: 100%; border-radius: 4px; background: linear-gradient(90deg,#f6820c,#f0a82e); }
   .rank-val { width: 50px; text-align: right; font-weight: 700; color: var(--text-primary); }
 
+  /* ── Agent Performance HO Table ── */
+  .aperf-table { width:100%; border-collapse:collapse; font-size:12px; }
+  .aperf-table thead th {
+    background: linear-gradient(135deg,#047481,#0694a2);
+    color:white; font-weight:600; font-size:11px;
+    padding:9px 10px; text-align:center;
+    border:1px solid rgba(255,255,255,0.15); white-space:nowrap;
+  }
+  .aperf-table thead th:nth-child(2) { text-align:left; }
+  .aperf-table tbody tr:nth-child(odd)  td { background:#f7fdfd; }
+  .aperf-table tbody tr:nth-child(even) td { background:#ffffff; }
+  .aperf-table tbody tr:hover td { background:#e6f6f8; }
+  .aperf-table tbody td {
+    padding:7px 10px; text-align:center;
+    border:1px solid #d8eef1; color:var(--text-primary); font-size:12px;
+  }
+  .aperf-table tbody td:nth-child(2) { text-align:left; font-weight:600; }
+  .aperf-table tfoot td {
+    background:linear-gradient(135deg,#047481,#0694a2);
+    color:white; font-weight:700; text-align:center;
+    padding:8px 10px; font-size:12px;
+  }
+  .aperf-table tfoot td:nth-child(2) { text-align:left; }
+  .done-ratio-high { background:#c6f6d5 !important; color:#276749; font-weight:700; }
+  .done-ratio-mid  { background:#fefcbf !important; color:#7b6000; font-weight:700; }
+  .done-ratio-low  { background:#fed7d7 !important; color:#9b2c2c; font-weight:700; }
+  .achieved-high   { background:#c6f6d5 !important; color:#276749; font-weight:700; }
+  .achieved-mid    { background:#fefcbf !important; color:#7b6000; font-weight:700; }
+  .achieved-low    { background:#fed7d7 !important; color:#9b2c2c; font-weight:700; }
+  .aperf-filter-row {
+    display:flex; flex-wrap:wrap; gap:10px; align-items:center;
+    background:var(--surface); border:1px solid var(--border);
+    border-radius:var(--radius-md); padding:10px 14px; margin-bottom:14px;
+    box-shadow:var(--shadow-sm);
+  }
+  .aperf-filter-row label { font-size:12px; font-weight:600; color:var(--text-secondary); }
+  .aperf-filter-row select {
+    height:30px; border:1px solid var(--border2); border-radius:6px;
+    padding:0 8px; font-size:12px; background:var(--surface2); outline:none;
+  }
+  .aperf-filter-row select:focus { border-color:var(--teal); }
+  .aperf-export-btn {
+    margin-left:auto; display:flex; align-items:center; gap:5px;
+    padding:5px 14px; border-radius:6px; font-size:12px; font-weight:600;
+    background:var(--teal); color:white; border:none; cursor:pointer; height:30px;
+  }
+  .aperf-export-btn:hover { background:var(--teal-dark); }
+  .aperf-kpi-grid {
+    display:grid; grid-template-columns:repeat(auto-fit,minmax(155px,1fr));
+    gap:12px; margin-bottom:16px;
+  }
+  .aperf-kpi {
+    background:var(--surface); border-radius:var(--radius-md);
+    border:1px solid var(--border); padding:14px 16px;
+    box-shadow:var(--shadow-sm); position:relative; overflow:hidden;
+  }
+  .aperf-kpi::before { content:''; position:absolute; top:0; left:0; right:0; height:3px; background:linear-gradient(90deg,#047481,#00b5cc); }
+  .aperf-kpi-label { font-size:11px; font-weight:600; color:var(--text-muted); text-transform:uppercase; letter-spacing:.05em; margin-bottom:6px; }
+  .aperf-kpi-val   { font-size:22px; font-weight:700; color:var(--text-primary); }
+  .aperf-kpi-meta  { font-size:11px; color:var(--text-muted); margin-top:4px; }
+
 </style>
 </head>
 <body>
@@ -641,6 +702,9 @@
     <button class="sub-tab" id="sub-inventory" onclick="switchSubTab('inventory')">
       📦 Inventory User 2026
     </button>
+    <button class="sub-tab" id="sub-agentperf" onclick="switchSubTab('agentperf')">
+      🏆 Agent Performance HO
+    </button>
   </div>
 
   <!-- Incentive Calculation content -->
@@ -656,6 +720,16 @@
   <!-- Inventory User 2026 content -->
   <div id="subtab-inventory" class="main" style="display:none">
     <div id="inventory-content">
+      <div class="loading-screen" style="min-height:30vh">
+        <div class="spinner"></div>
+        <div class="loading-text">Load data from Dashboard first…</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Agent Performance HO content -->
+  <div id="subtab-agentperf" class="main" style="display:none">
+    <div id="agentperf-content">
       <div class="loading-screen" style="min-height:30vh">
         <div class="spinner"></div>
         <div class="loading-text">Load data from Dashboard first…</div>
@@ -850,7 +924,7 @@ function processData(rows) {
   // Overall totals
   let totalCalls=0, doneCalls=0, closeCalls=0, notRel=0;
   let issues=0, training=0, physVisit=0;
-  let missedCalls=0, calledBackCount=0;
+  let missedCalls=0, calledBackCount=0, connectedCalls=0;
 
   for (const row of rows) {
     const agent   = (row['Agent Name']      || 'Unknown').trim();
@@ -881,6 +955,7 @@ function processData(rows) {
     if (cat === 'Physical Visit') physVisit++;
     if (isMissed)               missedCalls++;
     if (calledBack)             calledBackCount++;
+    if (!isMissed)              connectedCalls++;
     if (isHP)                   hyperpureLeads++;
     if (isPP)                   petpoojaOrders++;
 
@@ -940,7 +1015,7 @@ function processData(rows) {
   return {
     totalCalls, doneCalls, closeCalls, notRel,
     issues, training, physVisit,
-    missedCalls, calledBackCount, hyperpureLeads, petpoojaOrders,
+    missedCalls, calledBackCount, connectedCalls, hyperpureLeads, petpoojaOrders,
     agentStatus, agentCat, agentTalk, agentMissed, agentCalledBack,
     hourStatus, hourCat, catStatus, callRelated, interactionType
   };
@@ -997,17 +1072,18 @@ function renderDashboard(rows) {
 
   /* ── KPIs ── */
   const kpiData = [
-    { label:'Total Calls',       value: fmt(d.totalCalls),        meta: '100% of interactions',            color:'c-teal'   },
-    { label:'Done',              value: fmt(d.doneCalls),          meta: pct(d.doneCalls,d.totalCalls),     color:'c-green'  },
-    { label:'Close',             value: fmt(d.closeCalls),         meta: pct(d.closeCalls,d.totalCalls),    color:'c-amber'  },
-    { label:'Not Related',       value: fmt(d.notRel),             meta: pct(d.notRel,d.totalCalls),        color:'c-pink'   },
-    { label:'Missed Calls',      value: fmt(d.missedCalls),        meta: pct(d.missedCalls,d.totalCalls),   color:'c-red'    },
-    { label:'Called Back',       value: fmt(d.calledBackCount),    meta: pct(d.calledBackCount,d.totalCalls), color:'c-blue' },
-    { label:'Hyperpure Leads',   value: fmt(d.hyperpureLeads),     meta: pct(d.hyperpureLeads,d.totalCalls), color:'c-purple'},
-    { label:'Petpooja Orders',   value: fmt(d.petpoojaOrders),     meta: pct(d.petpoojaOrders,d.totalCalls), color:'c-olive' },
-    { label:'Total Issues',      value: fmt(d.issues),             meta: pct(d.issues,d.totalCalls),        color:'c-purple' },
-    { label:'Total Training',    value: fmt(d.training),           meta: pct(d.training,d.totalCalls),      color:'c-blue'   },
-    { label:'Physical Visit',    value: fmt(d.physVisit),          meta: pct(d.physVisit,d.totalCalls),     color:'c-olive'  },
+    { label:'Total Attempted Calls', value: fmt(d.totalCalls),        meta: 'All calls incl. missed',           color:'c-teal'   },
+    { label:'Connected Calls',       value: fmt(d.connectedCalls),     meta: pct(d.connectedCalls,d.totalCalls)+' of attempted',  color:'c-green'  },
+    { label:'Missed Calls',          value: fmt(d.missedCalls),        meta: pct(d.missedCalls,d.totalCalls)+' not connected',    color:'c-red'    },
+    { label:'Done',                  value: fmt(d.doneCalls),          meta: pct(d.doneCalls,d.totalCalls),     color:'c-green'  },
+    { label:'Close',                 value: fmt(d.closeCalls),         meta: pct(d.closeCalls,d.totalCalls),    color:'c-amber'  },
+    { label:'Not Related',           value: fmt(d.notRel),             meta: pct(d.notRel,d.totalCalls),        color:'c-pink'   },
+    { label:'Called Back',           value: fmt(d.calledBackCount),    meta: pct(d.calledBackCount,d.totalCalls), color:'c-blue' },
+    { label:'Hyperpure Leads',       value: fmt(d.hyperpureLeads),     meta: pct(d.hyperpureLeads,d.totalCalls), color:'c-purple'},
+    { label:'Petpooja Orders',       value: fmt(d.petpoojaOrders),     meta: pct(d.petpoojaOrders,d.totalCalls), color:'c-olive' },
+    { label:'Total Issues',          value: fmt(d.issues),             meta: pct(d.issues,d.totalCalls),        color:'c-purple' },
+    { label:'Total Training',        value: fmt(d.training),           meta: pct(d.training,d.totalCalls),      color:'c-blue'   },
+    { label:'Physical Visit',        value: fmt(d.physVisit),          meta: pct(d.physVisit,d.totalCalls),     color:'c-olive'  },
   ];
 
   app.innerHTML = `
@@ -1606,6 +1682,7 @@ function switchTab(tab) {
     if (ALL_ROWS.length) {
       if (currentSubTab === 'incentive') renderIncentiveReport(ALL_ROWS);
       if (currentSubTab === 'inventory') renderInventoryReport(ALL_ROWS);
+      if (currentSubTab === 'agentperf') renderAgentPerfReport(ALL_ROWS);
     }
   }
 }
@@ -1616,8 +1693,10 @@ function switchSubTab(sub) {
   document.getElementById('sub-' + sub).classList.add('active');
   document.getElementById('subtab-incentive').style.display = sub === 'incentive' ? '' : 'none';
   document.getElementById('subtab-inventory').style.display = sub === 'inventory'  ? '' : 'none';
+  document.getElementById('subtab-agentperf').style.display = sub === 'agentperf'  ? '' : 'none';
   if (sub === 'inventory' && ALL_ROWS.length) renderInventoryReport(ALL_ROWS);
   if (sub === 'incentive' && ALL_ROWS.length) renderIncentiveReport(ALL_ROWS);
+  if (sub === 'agentperf' && ALL_ROWS.length) renderAgentPerfReport(ALL_ROWS);
 }
 
 /* ─── INCENTIVE CALCULATION ───────────────────────────────────
@@ -2302,6 +2381,254 @@ function exportInventoryCSV() {
   const a = document.createElement('a');
   a.href = URL.createObjectURL(blob);
   a.download = 'inventory_restaurants_' + new Date().toISOString().slice(0, 10) + '.csv';
+  a.click();
+}
+
+/* ─── AGENT PERFORMANCE HO REPORT ───────────────────────────────
+   Columns (matching screenshot):
+   Agent | Agent Working Days | Total Records | Done Calls | Done Ratio% |
+   Attempt Ratio% | Close Ratio% | Total Talk Time | Done Talk Time |
+   Talk Time Per Call | Achieved Ra...
+   
+   - Agent Working Days  = unique dates per agent
+   - Total Records       = all calls for agent (totalCalls equivalent)
+   - Done Calls          = Status1 = "Done"
+   - Done Ratio%         = Done / Total Records × 100
+   - Attempt Ratio%      = Ismissed=FALSE calls / Total Records × 100  (connected/attempted)
+   - Close Ratio%        = Status1 = "Close" / Total Records × 100
+   - Total Talk Time     = sum of Customer Talk Duration (HH:MM:SS)
+   - Done Talk Time      = sum of duration for Done calls
+   - Talk Time Per Call  = Total Talk Time / Total Records
+   - Achieved Ra...      = Done / (Working Days × 20) × 100  (% of daily target achieved)
+──────────────────────────────────────────────────────────────── */
+function renderAgentPerfReport(rows) {
+  const container = document.getElementById('agentperf-content');
+  if (!container) return;
+
+  const selMonth = document.getElementById('aperf-sel-month')?.value || '';
+  const selAgent = document.getElementById('aperf-sel-agent')?.value || '';
+  const selStatus = document.getElementById('aperf-sel-status')?.value || '';
+
+  // All months and agents for filters
+  const allMonths = [...new Set(rows.map(r => { const d = parseDate(r); return d ? d.slice(0,7) : null; }).filter(Boolean))].sort().reverse();
+  const allAgents = [...new Set(rows.map(r => (r['Agent Name']||'').trim()))].filter(Boolean).sort();
+  const allStatuses = [...new Set(rows.map(r => (r['Status1']||'').trim()))].filter(Boolean).sort();
+
+  // Filter rows
+  let filtered = rows.filter(r => {
+    const d = parseDate(r);
+    if (selMonth && (!d || d.slice(0,7) !== selMonth)) return false;
+    const agent = (r['Agent Name']||'').trim();
+    if (selAgent && agent !== selAgent) return false;
+    const st = (r['Status1']||'').trim();
+    if (selStatus && st !== selStatus) return false;
+    return true;
+  });
+
+  // Aggregate per agent
+  const agentMap = {};
+  for (const row of filtered) {
+    const agent  = (row['Agent Name'] || 'Unknown').trim();
+    const st     = (row['Status1']    || '').trim();
+    const dur    = parseDuration(row);
+    const date   = parseDate(row);
+    const isMissed = String(row['Ismissed']||'').trim().toUpperCase() === 'TRUE';
+
+    if (!agentMap[agent]) agentMap[agent] = {
+      dates: new Set(), total: 0, done: 0, close: 0,
+      connected: 0, allSecs: 0, doneSecs: 0
+    };
+    const a = agentMap[agent];
+    a.total++;
+    if (st === 'Done')  { a.done++;  a.doneSecs += dur; }
+    if (st === 'Close') a.close++;
+    if (!isMissed)      a.connected++;
+    a.allSecs += dur;
+    if (date) a.dates.add(date);
+  }
+
+  // Sort by Done Calls desc
+  const agents = Object.entries(agentMap).sort((a,b) => b[1].done - a[1].done);
+
+  // Totals
+  let totTotal=0, totDone=0, totClose=0, totConn=0, totAllSecs=0, totDoneSecs=0, totDays=0;
+  agents.forEach(([,v]) => {
+    totTotal    += v.total;
+    totDone     += v.done;
+    totClose    += v.close;
+    totConn     += v.connected;
+    totAllSecs  += v.allSecs;
+    totDoneSecs += v.doneSecs;
+    totDays     += v.dates.size;
+  });
+
+  const avgDoneRatio = totTotal ? (totDone/totTotal*100).toFixed(2)+'%' : '0%';
+  const avgAttemptRatio = totTotal ? (totConn/totTotal*100).toFixed(2)+'%' : '0%';
+
+  // Build rows
+  let rowNum = 1;
+  const tableRows = agents.map(([name, v]) => {
+    const wd          = v.dates.size;
+    const doneRatio   = v.total ? (v.done  / v.total * 100) : 0;
+    const attemptRatio= v.total ? (v.connected / v.total * 100) : 0;
+    const closeRatio  = v.total ? (v.close / v.total * 100) : 0;
+    const talkPerCall = v.total ? v.allSecs / v.total : 0;
+    const dailyTarget = DAILY_TARGET; // 20
+    const agentTarget = wd * dailyTarget;
+    const achieved    = agentTarget > 0 ? (v.done / agentTarget * 100) : 0;
+
+    const drCls = doneRatio >= 55 ? 'done-ratio-high' : doneRatio >= 40 ? 'done-ratio-mid' : 'done-ratio-low';
+    const achCls = achieved >= 100 ? 'achieved-high' : achieved >= 80 ? 'achieved-mid' : 'achieved-low';
+
+    return `<tr>
+      <td>${rowNum++}</td>
+      <td>${name}</td>
+      <td>${wd}</td>
+      <td>${fmt(v.total)}</td>
+      <td>${fmt(v.done)}</td>
+      <td class="${drCls}">${doneRatio.toFixed(2)}%</td>
+      <td>${attemptRatio.toFixed(2)}%</td>
+      <td>${closeRatio.toFixed(2)}%</td>
+      <td>${secsToHMS(v.allSecs)}</td>
+      <td>${secsToHMS(v.doneSecs)}</td>
+      <td>${secsToHMS(talkPerCall)}</td>
+      <td class="${achCls}">${achieved.toFixed(2)}%</td>
+    </tr>`;
+  }).join('');
+
+  const totDoneRatio    = totTotal ? (totDone/totTotal*100).toFixed(2)+'%' : '0%';
+  const totAttemptRatio = totTotal ? (totConn/totTotal*100).toFixed(2)+'%' : '0%';
+  const totCloseRatio   = totTotal ? (totClose/totTotal*100).toFixed(2)+'%' : '0%';
+  const totTalkPerCall  = totTotal ? totAllSecs/totTotal : 0;
+  const totAchieved     = (totDays * DAILY_TARGET) > 0 ? (totDone/(totDays*DAILY_TARGET)*100).toFixed(2)+'%' : '0%';
+
+  container.innerHTML = `
+    <!-- Filter row -->
+    <div class="aperf-filter-row">
+      <label>📅 Month</label>
+      <select id="aperf-sel-month" onchange="renderAgentPerfReport(ALL_ROWS)">
+        <option value="">All Months</option>
+        ${allMonths.map(m => `<option value="${m}" ${m===selMonth?'selected':''}>${getMonthLabel(m+'-01')}</option>`).join('')}
+      </select>
+      <label style="margin-left:8px">👤 Agent</label>
+      <select id="aperf-sel-agent" onchange="renderAgentPerfReport(ALL_ROWS)">
+        <option value="">All Agents</option>
+        ${allAgents.map(a => `<option value="${a}" ${a===selAgent?'selected':''}>${a}</option>`).join('')}
+      </select>
+      <label style="margin-left:8px">📌 Status</label>
+      <select id="aperf-sel-status" onchange="renderAgentPerfReport(ALL_ROWS)">
+        <option value="">All Statuses</option>
+        ${allStatuses.map(s => `<option value="${s}" ${s===selStatus?'selected':''}>${s}</option>`).join('')}
+      </select>
+      <div style="display:flex;gap:8px;align-items:center;margin-left:8px;font-size:11px;color:var(--text-muted)">
+        <span style="background:#c6f6d5;color:#276749;padding:2px 8px;border-radius:10px;font-weight:600">≥55% Done Ratio</span>
+        <span style="background:#fefcbf;color:#7b6000;padding:2px 8px;border-radius:10px;font-weight:600">40-55%</span>
+        <span style="background:#fed7d7;color:#9b2c2c;padding:2px 8px;border-radius:10px;font-weight:600">&lt;40%</span>
+      </div>
+      <button class="aperf-export-btn" onclick="exportAgentPerfCSV()">⬇ Export CSV</button>
+    </div>
+
+    <!-- KPI summary -->
+    <div class="aperf-kpi-grid">
+      <div class="aperf-kpi">
+        <div class="aperf-kpi-label">Total Agents</div>
+        <div class="aperf-kpi-val">${agents.length}</div>
+        <div class="aperf-kpi-meta">in selected period</div>
+      </div>
+      <div class="aperf-kpi">
+        <div class="aperf-kpi-label">Total Records</div>
+        <div class="aperf-kpi-val">${fmt(totTotal)}</div>
+        <div class="aperf-kpi-meta">calls / interactions</div>
+      </div>
+      <div class="aperf-kpi">
+        <div class="aperf-kpi-label">Total Done Calls</div>
+        <div class="aperf-kpi-val" style="color:#1a6b47">${fmt(totDone)}</div>
+        <div class="aperf-kpi-meta">Avg ratio: ${avgDoneRatio}</div>
+      </div>
+      <div class="aperf-kpi">
+        <div class="aperf-kpi-label">Connected Calls</div>
+        <div class="aperf-kpi-val">${fmt(totConn)}</div>
+        <div class="aperf-kpi-meta">Avg attempt ratio: ${avgAttemptRatio}</div>
+      </div>
+      <div class="aperf-kpi">
+        <div class="aperf-kpi-label">Total Talk Time</div>
+        <div class="aperf-kpi-val" style="font-size:17px">${secsToHMS(totAllSecs)}</div>
+        <div class="aperf-kpi-meta">across all agents</div>
+      </div>
+      <div class="aperf-kpi">
+        <div class="aperf-kpi-label">Done Talk Time</div>
+        <div class="aperf-kpi-val" style="font-size:17px">${secsToHMS(totDoneSecs)}</div>
+        <div class="aperf-kpi-meta">talk time for done calls</div>
+      </div>
+    </div>
+
+    <!-- Main table -->
+    <div class="panel" style="padding:0;overflow:hidden">
+      <div style="padding:14px 18px 10px;display:flex;align-items:center;justify-content:space-between;border-bottom:1px solid var(--border)">
+        <span style="font-size:14px;font-weight:600;color:var(--text-primary)">
+          🏆 Agent Performance HO
+          <span style="font-size:11px;font-weight:400;color:var(--text-muted);margin-left:8px">${agents.length} agents · ${selMonth ? getMonthLabel(selMonth+'-01') : 'All Months'}</span>
+        </span>
+        <span style="font-size:11px;color:var(--text-muted)">Daily Target: ${DAILY_TARGET} calls/day · Achieved % = Done ÷ (Working Days × ${DAILY_TARGET})</span>
+      </div>
+      <div style="overflow-x:auto">
+        <table class="aperf-table">
+          <thead>
+            <tr>
+              <th>#</th>
+              <th>Agent</th>
+              <th>Agent Working<br>Days</th>
+              <th>Total<br>Records</th>
+              <th>Done<br>Calls</th>
+              <th>Done<br>Ratio%</th>
+              <th>Attempt<br>Ratio%</th>
+              <th>Close<br>Ratio%</th>
+              <th>Total<br>Talk Time</th>
+              <th>Done<br>Talk Time</th>
+              <th>Talk Time<br>Per Call</th>
+              <th>Achieved<br>Ra%</th>
+            </tr>
+          </thead>
+          <tbody>
+            ${tableRows || '<tr><td colspan="12" style="padding:2rem;color:#718096">No data found for selected filters.</td></tr>'}
+          </tbody>
+          <tfoot>
+            <tr>
+              <td colspan="2">Total / Average</td>
+              <td>${totDays}</td>
+              <td>${fmt(totTotal)}</td>
+              <td>${fmt(totDone)}</td>
+              <td>${totDoneRatio}</td>
+              <td>${totAttemptRatio}</td>
+              <td>${totCloseRatio}</td>
+              <td>${secsToHMS(totAllSecs)}</td>
+              <td>${secsToHMS(totDoneSecs)}</td>
+              <td>${secsToHMS(totTalkPerCall)}</td>
+              <td>${totAchieved}</td>
+            </tr>
+          </tfoot>
+        </table>
+      </div>
+    </div>
+  `;
+}
+
+function exportAgentPerfCSV() {
+  const rows = document.querySelectorAll('.aperf-table tbody tr');
+  if (!rows.length) { alert('No data to export.'); return; }
+  const headers = ['#','Agent','Agent Working Days','Total Records','Done Calls','Done Ratio%','Attempt Ratio%','Close Ratio%','Total Talk Time','Done Talk Time','Talk Time Per Call','Achieved Ra%'];
+  const csvRows = [headers.join(',')];
+  rows.forEach(tr => {
+    const cells = [...tr.querySelectorAll('td')].map(td => {
+      const v = td.textContent.trim().replace(/"/g,'""');
+      return v.includes(',') ? '"'+v+'"' : v;
+    });
+    if (cells.length === headers.length) csvRows.push(cells.join(','));
+  });
+  const blob = new Blob([csvRows.join('\n')], {type:'text/csv;charset=utf-8;'});
+  const a = document.createElement('a');
+  a.href = URL.createObjectURL(blob);
+  a.download = 'agent_performance_ho_' + new Date().toISOString().slice(0,10) + '.csv';
   a.click();
 }
 
