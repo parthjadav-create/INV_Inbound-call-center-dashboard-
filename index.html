@@ -240,7 +240,7 @@
     background: var(--surface); border: 1px solid var(--border);
     border-radius: var(--radius-md); padding: 12px 16px;
     margin-bottom: 16px; box-shadow: var(--shadow-sm);
-    position: sticky; top: 60px; z-index: 90;
+    position: sticky; top: 102px; z-index: 90;
   }
   .toolbar-group { display: flex; align-items: center; gap: 6px; flex-shrink: 0; }
   .toolbar label { font-size: 12px; color: var(--text-secondary); font-weight: 600; white-space: nowrap; }
@@ -284,6 +284,110 @@
   .hbar-track { flex: 1; background: var(--surface2); border-radius: 3px; height: 10px; overflow: hidden; }
   .hbar-fill  { height: 100%; border-radius: 3px; transition: width 0.5s ease; }
   .hbar-val   { width: 36px; text-align: right; font-weight: 600; color: var(--text-primary); flex-shrink: 0; }
+
+  /* ── Top-level nav tabs ── */
+  .nav-tabs-bar {
+    background: linear-gradient(135deg, #047481 0%, #0694a2 50%, #00b5cc 100%);
+    display: flex; align-items: flex-end;
+    padding: 0 2rem; gap: 4px;
+    border-bottom: 2px solid rgba(255,255,255,0.18);
+  }
+  .nav-tab {
+    padding: 10px 22px; font-size: 13px; font-weight: 600; cursor: pointer;
+    color: rgba(255,255,255,0.72); border: none; background: transparent;
+    border-radius: 8px 8px 0 0; transition: all 0.18s; letter-spacing: 0.01em;
+    border-bottom: 3px solid transparent; margin-bottom: -2px;
+  }
+  .nav-tab:hover { color: white; background: rgba(255,255,255,0.12); }
+  .nav-tab.active {
+    color: white; background: rgba(255,255,255,0.18);
+    border-bottom: 3px solid white;
+  }
+
+  /* ── Sub-tabs (Reports page) ── */
+  .sub-tabs-bar {
+    display: flex; gap: 4px; align-items: center;
+    background: var(--surface); border-bottom: 2px solid var(--border);
+    padding: 0 2rem; position: sticky; top: 102px; z-index: 89;
+    box-shadow: var(--shadow-sm);
+  }
+  .sub-tab {
+    padding: 10px 20px; font-size: 13px; font-weight: 600; cursor: pointer;
+    color: var(--text-muted); border: none; background: transparent;
+    border-bottom: 3px solid transparent; margin-bottom: -2px;
+    transition: all 0.15s; border-radius: 6px 6px 0 0;
+  }
+  .sub-tab:hover { color: var(--teal); background: var(--teal-light); }
+  .sub-tab.active { color: var(--teal-dark); border-bottom: 3px solid var(--teal); }
+
+  /* ── Incentive table styles ── */
+  .inc-table { width: 100%; border-collapse: collapse; font-size: 12px; }
+  .inc-table thead th {
+    background: linear-gradient(135deg,#6c63d4,#9b80e6);
+    color: white; font-weight: 600; font-size: 11px;
+    padding: 9px 10px; text-align: center;
+    border: 1px solid rgba(255,255,255,0.15); white-space: nowrap;
+  }
+  .inc-table thead th:first-child { text-align: center; }
+  .inc-table tbody tr:nth-child(odd)  td { background: #fafaff; }
+  .inc-table tbody tr:nth-child(even) td { background: #ffffff; }
+  .inc-table tbody tr:hover td { background: #f0eeff; }
+  .inc-table tbody td {
+    padding: 7px 10px; text-align: center;
+    border: 1px solid #e9e9f5; color: var(--text-primary); font-size: 12px;
+  }
+  .inc-table tbody td:nth-child(2) { text-align: left; font-weight: 600; }
+  .inc-table tfoot td {
+    background: linear-gradient(135deg,#6c63d4,#9b80e6);
+    color: white; font-weight: 700; text-align: center;
+    padding: 8px 10px; font-size: 12px;
+  }
+  .done-cell  { background: #e8f9f0 !important; color: #1a6b47; font-weight: 700; }
+  .pend-pos   { background: #fff3e0 !important; color: #8a4a00; font-weight: 600; }
+  .pend-neg   { background: #ffeaea !important; color: #9b2c2c; font-weight: 600; }
+  .inc-pos    { background: #e8f9f0 !important; color: #1a6b47; font-weight: 700; }
+  .inc-neg    { background: #ffeaea !important; color: #9b2c2c; font-weight: 700; }
+
+  .inc-summary-grid {
+    display: grid; grid-template-columns: repeat(auto-fit,minmax(160px,1fr));
+    gap: 12px; margin-bottom: 16px;
+  }
+  .inc-kpi {
+    background: var(--surface); border-radius: var(--radius-md);
+    border: 1px solid var(--border); padding: 14px 16px;
+    box-shadow: var(--shadow-sm); position: relative; overflow: hidden;
+  }
+  .inc-kpi::before { content:''; position:absolute; top:0; left:0; right:0; height:3px; background:linear-gradient(90deg,#6c63d4,#9b80e6); }
+  .inc-kpi-label { font-size:11px; font-weight:600; color:var(--text-muted); text-transform:uppercase; letter-spacing:.05em; margin-bottom:6px; }
+  .inc-kpi-val   { font-size:22px; font-weight:700; color:var(--text-primary); }
+  .inc-kpi-meta  { font-size:11px; color:var(--text-muted); margin-top:4px; }
+
+  .inc-filter-row {
+    display: flex; flex-wrap: wrap; gap: 10px; align-items: center;
+    background: var(--surface); border: 1px solid var(--border);
+    border-radius: var(--radius-md); padding: 10px 14px; margin-bottom: 14px;
+    box-shadow: var(--shadow-sm);
+  }
+  .inc-filter-row label { font-size: 12px; font-weight: 600; color: var(--text-secondary); }
+  .inc-filter-row select, .inc-filter-row input {
+    height: 30px; border: 1px solid var(--border2); border-radius: 6px;
+    padding: 0 8px; font-size: 12px; background: var(--surface2); outline: none;
+  }
+  .inc-filter-row select:focus, .inc-filter-row input:focus { border-color: #6c63d4; }
+  .inc-export-btn {
+    margin-left: auto; display: flex; align-items: center; gap: 5px;
+    padding: 5px 14px; border-radius: 6px; font-size: 12px; font-weight: 600;
+    background: #6c63d4; color: white; border: none; cursor: pointer; height: 30px;
+  }
+  .inc-export-btn:hover { background: #5a52b8; }
+  .legend-pill {
+    display: inline-flex; align-items: center; gap: 5px;
+    font-size: 11px; padding: 3px 10px; border-radius: 20px; font-weight: 500;
+  }
+  .legend-pill-green { background:#e8f9f0; color:#1a6b47; }
+  .legend-pill-red   { background:#ffeaea; color:#9b2c2c; }
+  .legend-pill-amber { background:#fff3e0; color:#8a4a00; }
+
 </style>
 </head>
 <body>
@@ -312,8 +416,17 @@
   </div>
 </header>
 
-<!-- ══ MAIN ════════════════════════════════════════════════════ -->
-<!-- ══ TOOLBAR ═══════════════════════════════════════════════════ -->
+<!-- ══ NAV TABS ════════════════════════════════════════════════ -->
+<div class="nav-tabs-bar">
+  <button class="nav-tab active" id="nav-dashboard" onclick="switchTab('dashboard')">
+    📊 Dashboard
+  </button>
+  <button class="nav-tab" id="nav-reports" onclick="switchTab('reports')">
+    📋 Reports
+  </button>
+</div>
+
+<!-- ══ TOOLBAR (Dashboard only) ══════════════════════════════════ -->
 <div class="toolbar" id="toolbar" style="display:none">
 
   <!-- Date range -->
@@ -396,6 +509,38 @@
 <footer class="footer" id="footer" style="display:none">
   <span id="footer-text"></span>
 </footer>
+
+<!-- ══ REPORTS PAGE ════════════════════════════════════════════ -->
+<div id="page-reports" style="display:none">
+  <!-- Sub-tabs -->
+  <div class="sub-tabs-bar">
+    <button class="sub-tab active" id="sub-incentive" onclick="switchSubTab('incentive')">
+      💰 Incentive Calculation
+    </button>
+    <button class="sub-tab" id="sub-inventory" onclick="switchSubTab('inventory')">
+      📦 Inventory User 2026
+    </button>
+  </div>
+
+  <!-- Incentive Calculation content -->
+  <div id="subtab-incentive" class="main">
+    <div id="incentive-content">
+      <div class="loading-screen" style="min-height:30vh">
+        <div class="spinner"></div>
+        <div class="loading-text">Load data from Dashboard first…</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Inventory User 2026 content -->
+  <div id="subtab-inventory" class="main" style="display:none">
+    <div class="panel" style="text-align:center;padding:3rem">
+      <div style="font-size:48px;margin-bottom:12px">📦</div>
+      <h3 style="color:var(--text-secondary);font-weight:500">Inventory User 2026</h3>
+      <p style="color:var(--text-muted);margin-top:8px;font-size:13px">This sub-tab is ready for your inventory data.</p>
+    </div>
+  </div>
+</div>
 
 <!-- ══ SCRIPTS ══════════════════════════════════════════════════ -->
 <script>
@@ -532,6 +677,7 @@ async function loadData() {
 
     ALL_ROWS = rows;
     renderDashboard(rows);
+    if (currentTab === 'reports') renderIncentiveReport(rows);
 
     document.getElementById('last-updated').textContent = 'Updated ' + new Date().toLocaleTimeString();
     document.getElementById('footer').style.display = '';
@@ -1313,6 +1459,274 @@ function takeScreenshot() {
       alert('Screenshot failed: ' + err.message);
     });
   }, 300);
+}
+
+/* ─── TAB SWITCHING ──────────────────────────────────────────── */
+let currentTab = 'dashboard';
+let currentSubTab = 'incentive';
+
+function switchTab(tab) {
+  currentTab = tab;
+  // Toggle nav active
+  document.querySelectorAll('.nav-tab').forEach(el => el.classList.remove('active'));
+  document.getElementById('nav-' + tab).classList.add('active');
+
+  if (tab === 'dashboard') {
+    document.getElementById('toolbar').style.display = ALL_ROWS.length ? 'flex' : 'none';
+    document.getElementById('app').style.display = '';
+    document.getElementById('footer').style.display = ALL_ROWS.length ? '' : 'none';
+    document.getElementById('page-reports').style.display = 'none';
+  } else {
+    document.getElementById('toolbar').style.display = 'none';
+    document.getElementById('app').style.display = 'none';
+    document.getElementById('footer').style.display = 'none';
+    document.getElementById('page-reports').style.display = '';
+    if (ALL_ROWS.length) renderIncentiveReport(ALL_ROWS);
+  }
+}
+
+function switchSubTab(sub) {
+  currentSubTab = sub;
+  document.querySelectorAll('.sub-tab').forEach(el => el.classList.remove('active'));
+  document.getElementById('sub-' + sub).classList.add('active');
+  document.getElementById('subtab-incentive').style.display = sub === 'incentive' ? '' : 'none';
+  document.getElementById('subtab-inventory').style.display = sub === 'inventory'  ? '' : 'none';
+}
+
+/* ─── INCENTIVE CALCULATION ───────────────────────────────────
+   Logic from screenshot:
+   - Company Working Days = 24  (fixed monthly)
+   - Company Target       = 480 (fixed = Working Days × 20)
+   - Agent Working Days   = unique days agent has calls
+   - Agent Target         = Agent Working Days × 20
+   - Present              = days agent was present (same as working days from data)
+   - Done                 = count of Status1 = "Done" for that agent that month
+   - Pending              = Agent Target − Done  (negative = exceeded target)
+   - Incentive/Penalty:
+       If Done >= Agent Target  →  +500 (incentive)
+       Else                     →  −1000 (penalty)
+   ──────────────────────────────────────────────────────────── */
+const COMPANY_WORKING_DAYS = 24;
+const DAILY_TARGET         = 20;   // calls per day
+const INCENTIVE_AMOUNT     = 500;
+const PENALTY_AMOUNT       = -1000;
+
+function getMonthLabel(dateStr) {
+  if (!dateStr) return 'Unknown';
+  const d = new Date(dateStr);
+  if (isNaN(d)) return 'Unknown';
+  return d.toLocaleString('en-IN', { month: 'long', year: 'numeric' });
+}
+
+function renderIncentiveReport(rows) {
+  const container = document.getElementById('incentive-content');
+
+  // ── Group by month × agent
+  // monthKey = 'YYYY-MM'
+  const monthAgentData = {};
+
+  for (const row of rows) {
+    const agent    = (row['Agent Name'] || 'Unknown').trim();
+    const st       = (row['Status1']    || '').trim();
+    const dateStr  = parseDate(row);
+    if (!dateStr) continue;
+
+    const monthKey = dateStr.slice(0, 7); // YYYY-MM
+    if (!monthAgentData[monthKey]) monthAgentData[monthKey] = {};
+    if (!monthAgentData[monthKey][agent]) {
+      monthAgentData[monthKey][agent] = { dates: new Set(), done: 0 };
+    }
+    monthAgentData[monthKey][agent].dates.add(dateStr);
+    if (st === 'Done') monthAgentData[monthKey][agent].done++;
+  }
+
+  // Sort months descending
+  const months = Object.keys(monthAgentData).sort().reverse();
+
+  // Filter controls
+  const allAgents = [...new Set(rows.map(r => (r['Agent Name']||'').trim()))].filter(Boolean).sort();
+  const selMonth  = document.getElementById('inc-sel-month')?.value  || '';
+  const selAgent  = document.getElementById('inc-sel-agent')?.value  || '';
+
+  // Build table for selected month (default: latest)
+  const activeMonths = selMonth ? [selMonth] : months;
+
+  let grandTotalDone = 0, grandIncentive = 0, grandPenalty = 0, totalAgents = 0;
+  let tableRows = '';
+  let rowNum = 1;
+
+  for (const mk of activeMonths) {
+    const agents = Object.entries(monthAgentData[mk])
+      .filter(([name]) => !selAgent || name === selAgent)
+      .sort((a,b) => b[1].done - a[1].done);
+
+    for (const [name, v] of agents) {
+      const workingDays  = v.dates.size;
+      const agentTarget  = workingDays * DAILY_TARGET;
+      const done         = v.done;
+      const pending      = agentTarget - done;
+      const incentive    = done >= agentTarget ? INCENTIVE_AMOUNT : PENALTY_AMOUNT;
+
+      grandTotalDone += done;
+      if (incentive > 0) grandIncentive += incentive;
+      else               grandPenalty   += incentive;
+      totalAgents++;
+
+      const monthLabel = getMonthLabel(mk + '-01');
+      const pendClass  = pending < 0 ? 'pend-neg' : 'pend-pos';
+      const incClass   = incentive > 0 ? 'inc-pos' : 'inc-neg';
+      const incText    = incentive > 0 ? `+${incentive.toLocaleString()}` : incentive.toLocaleString();
+
+      tableRows += `<tr>
+        <td>${rowNum++}</td>
+        <td>${monthLabel}</td>
+        <td>${name}</td>
+        <td>${COMPANY_WORKING_DAYS}</td>
+        <td>${COMPANY_WORKING_DAYS * DAILY_TARGET}</td>
+        <td>${workingDays}</td>
+        <td>${agentTarget}</td>
+        <td>${workingDays}</td>
+        <td class="done-cell">${done}</td>
+        <td class="${pendClass}">${pending}</td>
+        <td class="${incClass}">${incText}</td>
+      </tr>`;
+    }
+  }
+
+  const qualifiedCount   = totalAgents > 0 ? rows.filter ? 0 : 0 : 0; // recalc below
+  // Count incentive vs penalty
+  let incCount = 0, penCount = 0;
+  for (const mk of activeMonths) {
+    for (const [name, v] of Object.entries(monthAgentData[mk])) {
+      if (selAgent && name !== selAgent) continue;
+      const done = v.done;
+      const target = v.dates.size * DAILY_TARGET;
+      if (done >= target) incCount++;
+      else penCount++;
+    }
+  }
+
+  container.innerHTML = `
+    <!-- Filter row -->
+    <div class="inc-filter-row">
+      <label>📅 Month</label>
+      <select id="inc-sel-month" onchange="renderIncentiveReport(ALL_ROWS)">
+        <option value="">All Months</option>
+        ${months.map(m => `<option value="${m}" ${m===selMonth?'selected':''}>${getMonthLabel(m+'-01')}</option>`).join('')}
+      </select>
+      <label style="margin-left:8px">👤 Agent</label>
+      <select id="inc-sel-agent" onchange="renderIncentiveReport(ALL_ROWS)">
+        <option value="">All Agents</option>
+        ${allAgents.map(a => `<option value="${a}" ${a===selAgent?'selected':''}>${a}</option>`).join('')}
+      </select>
+      <div style="display:flex;gap:8px;align-items:center;margin-left:8px">
+        <span class="legend-pill legend-pill-green">✅ Incentive: ≥ Target</span>
+        <span class="legend-pill legend-pill-red">❌ Penalty: < Target</span>
+        <span class="legend-pill legend-pill-amber">Target = Working Days × ${DAILY_TARGET} calls/day</span>
+      </div>
+      <button class="inc-export-btn" onclick="exportIncentiveCSV()">
+        ⬇ Export CSV
+      </button>
+    </div>
+
+    <!-- KPI summary -->
+    <div class="inc-summary-grid">
+      <div class="inc-kpi">
+        <div class="inc-kpi-label">Total Agents</div>
+        <div class="inc-kpi-val">${totalAgents}</div>
+        <div class="inc-kpi-meta">in selected period</div>
+      </div>
+      <div class="inc-kpi">
+        <div class="inc-kpi-label">Earned Incentive</div>
+        <div class="inc-kpi-val" style="color:#1a6b47">${incCount}</div>
+        <div class="inc-kpi-meta">agents hit target (+₹${INCENTIVE_AMOUNT} each)</div>
+      </div>
+      <div class="inc-kpi">
+        <div class="inc-kpi-label">Penalty Applied</div>
+        <div class="inc-kpi-val" style="color:#9b2c2c">${penCount}</div>
+        <div class="inc-kpi-meta">agents missed target (−₹${Math.abs(PENALTY_AMOUNT)} each)</div>
+      </div>
+      <div class="inc-kpi">
+        <div class="inc-kpi-label">Net Incentive Payout</div>
+        <div class="inc-kpi-val" style="color:${grandIncentive+grandPenalty>=0?'#1a6b47':'#9b2c2c'}">
+          ₹${(grandIncentive + grandPenalty).toLocaleString('en-IN')}
+        </div>
+        <div class="inc-kpi-meta">Total: +₹${grandIncentive.toLocaleString('en-IN')} / −₹${Math.abs(grandPenalty).toLocaleString('en-IN')}</div>
+      </div>
+      <div class="inc-kpi">
+        <div class="inc-kpi-label">Total Done Calls</div>
+        <div class="inc-kpi-val">${grandTotalDone.toLocaleString('en-IN')}</div>
+        <div class="inc-kpi-meta">across all agents</div>
+      </div>
+      <div class="inc-kpi">
+        <div class="inc-kpi-label">Daily Target</div>
+        <div class="inc-kpi-val">${DAILY_TARGET}</div>
+        <div class="inc-kpi-meta">calls/day per agent</div>
+      </div>
+    </div>
+
+    <!-- Main table -->
+    <div class="panel" style="padding:0;overflow:hidden">
+      <div style="padding:14px 18px 10px;display:flex;align-items:center;justify-content:space-between;border-bottom:1px solid var(--border)">
+        <span style="font-size:14px;font-weight:600;color:var(--text-primary)">
+          💰 Incentive Calculation
+          <span style="font-size:11px;font-weight:400;color:var(--text-muted);margin-left:8px">${totalAgents} agents</span>
+        </span>
+        <span style="font-size:11px;color:var(--text-muted)">Company Working Days: ${COMPANY_WORKING_DAYS} · Daily Target: ${DAILY_TARGET} calls</span>
+      </div>
+      <div style="overflow-x:auto">
+        <table class="inc-table">
+          <thead>
+            <tr>
+              <th>#</th>
+              <th>Month</th>
+              <th>Trainer Name</th>
+              <th>Company<br>Working Days</th>
+              <th>Company<br>Target</th>
+              <th>Working<br>Days</th>
+              <th>Target</th>
+              <th>Present</th>
+              <th>Done ▼</th>
+              <th>Pending</th>
+              <th>Incentive /<br>Penalty (₹)</th>
+            </tr>
+          </thead>
+          <tbody>
+            ${tableRows || '<tr><td colspan="11" style="padding:2rem;color:#718096">No data found for selected filters.</td></tr>'}
+          </tbody>
+          <tfoot>
+            <tr>
+              <td colspan="8">Total</td>
+              <td>${grandTotalDone.toLocaleString('en-IN')}</td>
+              <td>—</td>
+              <td style="color:${grandIncentive+grandPenalty>=0?'#c6f6d5':'#fed7d7'}">
+                ₹${(grandIncentive + grandPenalty).toLocaleString('en-IN')}
+              </td>
+            </tr>
+          </tfoot>
+        </table>
+      </div>
+    </div>
+  `;
+}
+
+function exportIncentiveCSV() {
+  const rows = document.querySelectorAll('.inc-table tbody tr');
+  if (!rows.length) { alert('No data to export.'); return; }
+  const headers = ['#','Month','Trainer Name','Company Working Days','Company Target','Working Days','Target','Present','Done','Pending','Incentive/Penalty'];
+  const csvRows = [headers.join(',')];
+  rows.forEach(tr => {
+    const cells = [...tr.querySelectorAll('td')].map(td => {
+      const v = td.textContent.trim().replace(/"/g,'""');
+      return v.includes(',') ? '"'+v+'"' : v;
+    });
+    if (cells.length === headers.length) csvRows.push(cells.join(','));
+  });
+  const blob = new Blob([csvRows.join('\n')], {type:'text/csv;charset=utf-8;'});
+  const a = document.createElement('a');
+  a.href = URL.createObjectURL(blob);
+  a.download = 'incentive_calculation_' + new Date().toISOString().slice(0,10) + '.csv';
+  a.click();
 }
 
 /* ─── BOOT ───────────────────────────────────────────────────── */
